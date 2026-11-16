@@ -10,6 +10,7 @@ config/features=PackedStringArray("4.7")
 [autoload]
 
 Settings="*res://scripts/settings.gd"
+Sound="*res://scripts/sound.gd"
 
 [display]
 
@@ -18,6 +19,10 @@ window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=0
+
+[gui]
+
+theme/custom_font="res://assets/fonts/Nunito-ExtraBold.ttf"
 
 [input_devices]
 
