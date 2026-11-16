@@ -114,7 +114,7 @@ func _finish() -> void:
 
 
 func _go_home() -> void:
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	get_tree().change_scene_to_file("res://scenes/games_menu.tscn")
 
 
 # Quiet progress dots along the bottom: filled = popped. Purely informative.

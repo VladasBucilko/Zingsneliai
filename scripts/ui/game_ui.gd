@@ -2,10 +2,14 @@ class_name GameUI
 ## Shared bits for game screens: home button, speaker button, title, progress dots.
 
 
-static func add_home(screen: Control) -> RoundButton:
+const HOME := "res://scenes/main.tscn"
+const GAMES := "res://scenes/games_menu.tscn"
+
+
+static func add_home(screen: Control, target := GAMES) -> RoundButton:
 	var b := RoundButton.new(RoundButton.Kind.HOME)
 	b.position = Vector2(64, 56)
-	b.pressed.connect(func(): screen.get_tree().change_scene_to_file("res://scenes/main.tscn"))
+	b.pressed.connect(func(): screen.get_tree().change_scene_to_file(target))
 	screen.add_child(b)
 	return b
 

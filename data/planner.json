@@ -1,0 +1,13 @@
+{
+  "slots": 6,
+  "cards": [
+    {"word": "valgyti", "label": "Valgyti"},
+    {"word": "plauti rankas", "label": "Plauti rankas"},
+    {"word": "valytis dantis", "label": "Valytis dantis"},
+    {"word": "žaisti", "label": "Žaisti"},
+    {"word": "į lauką", "label": "Į lauką"},
+    {"word": "rengtis", "label": "Rengtis"},
+    {"word": "maudytis", "label": "Maudytis"},
+    {"word": "miegoti", "label": "Miegoti"}
+  ]
+}

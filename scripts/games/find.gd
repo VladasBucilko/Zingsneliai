@@ -41,7 +41,7 @@ func _show_round() -> void:
 		await get_tree().create_timer(0.5).timeout
 		var w := WellDone.make(false)
 		w.replay.connect(func(): w.queue_free(); _start(int(_level.get("id", 1))))
-		w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/main.tscn"))
+		w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
 		add_child(w)
 		return
 	var r: Dictionary = _rounds[_round]

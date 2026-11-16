@@ -20,7 +20,7 @@ var _matched := 0
 func _ready() -> void:
 	var home := RoundButton.new(RoundButton.Kind.HOME)
 	home.position = Vector2(64, 56)
-	home.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/main.tscn"))
+	home.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
 	add_child(home)
 	var speak := RoundButton.new(RoundButton.Kind.SPEAKER)
 	speak.set_anchors_preset(Control.PRESET_TOP_RIGHT)
@@ -125,5 +125,5 @@ func _finish() -> void:
 	await get_tree().create_timer(0.9).timeout
 	var w := WellDone.make(false)
 	w.replay.connect(func(): w.queue_free(); _start(int(_level.id)))
-	w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/main.tscn"))
+	w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
 	add_child(w)
