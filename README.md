@@ -15,3 +15,20 @@ Lithuanian-language learning app for children with special needs (autism, speech
 
 ## Design rules
 Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzzer, real photos and human voices.
+
+## Project layout
+- `scenes/main.tscn` – home screen (activity tiles)
+- `scenes/games/bubble_pop.tscn` – **Burbulai**: tap slowly rising bubbles. Levels come from `scripts/games/bubble_level_generator.gd` (deterministic: same level + seed = same level; bubbles that float away come back, so a level can't be failed)
+- `scenes/games/matching.tscn` – **Poros**: tap a picture, then its twin in the other row. Levels in `data/levels/matching.json`
+- `scripts/word_bank.gd` – finds a word's picture/voice by ASCII slug (`katė` → `assets/photos/kate.png`, `assets/audio/words/kate.mp3`)
+- `scripts/sound.gd` (autoload `Sound`) – voice + soft effects, respects parent settings
+
+## Tools
+- `godot --headless -s tools/bubble_levels.gd` – print the bubble difficulty curve
+- `godot --headless -s tools/bubble_levels.gd -- --export 20` – write 20 generated levels to `data/levels/bubbles_generated.json`
+- `python3 tools/make_sfx.py` – regenerate the soft `pop`/`chime` sounds
+
+## Assets (prototype)
+- Pictures: ElevenLabs image generation (calm pastel cartoon style), cropped to 512×512
+- Voice: ElevenLabs `eleven_v4`, voice "Žilvinas – Lithuanian Male Voice" (pronunciation test)
+- Font: Nunito ExtraBold (SIL Open Font License)
