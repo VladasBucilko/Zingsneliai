@@ -32,3 +32,8 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
 - Pictures: ElevenLabs image generation (calm pastel cartoon style), cropped to 512×512
 - Voice: ElevenLabs `eleven_v4`, voice "Žilvinas – Lithuanian Male Voice" (pronunciation test)
 - Font: Nunito ExtraBold (SIL Open Font License)
+
+## Android build
+- Export preset: **Android** in `export_presets.cfg` (no Gradle; arm64 + armv7; package `lt.zingsneliai.app`)
+- In Godot: *Project → Export… → Android → Export Project*. Needs the Android export templates and an Android SDK path in *Editor Settings → Export → Android*.
+- Latest test APK: `zingsneliai.apk` on the `apk` branch
