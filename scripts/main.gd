@@ -5,10 +5,10 @@ const ACTIVITIES := [
 	# label, icon, accent, scene (empty = coming soon)
 	["Burbulai", ActivityTile.Icon.BUBBLES, Palette.SKY, "res://scenes/games/bubble_pop.tscn"],
 	["Poros", ActivityTile.Icon.MATCHING, Palette.PEACH, "res://scenes/games/matching.tscn"],
-	["Rūšiuok", ActivityTile.Icon.SORTING, Palette.SAGE, ""],
-	["Surask", ActivityTile.Icon.FIND, Palette.BUTTER, ""],
-	["Dėlionė", ActivityTile.Icon.PUZZLE, Palette.LAVENDER, ""],
-	["Kartok", ActivityTile.Icon.SOUND, Palette.ROSE, ""],
+	["Rūšiuok", ActivityTile.Icon.SORTING, Palette.SAGE, "res://scenes/games/sorting.tscn"],
+	["Surask", ActivityTile.Icon.FIND, Palette.BUTTER, "res://scenes/games/find.tscn"],
+	["Dėlionė", ActivityTile.Icon.PUZZLE, Palette.LAVENDER, "res://scenes/games/puzzle.tscn"],
+	["Kartok", ActivityTile.Icon.SOUND, Palette.ROSE, "res://scenes/games/repeat.tscn"],
 ]
 
 @onready var _grid: GridContainer = $Activities
