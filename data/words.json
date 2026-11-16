@@ -1,0 +1,8 @@
+{
+  "themes": [
+    {"id": "gyvunai", "name": "Gyvūnai", "words": ["šuo", "katė", "karvė", "arklys", "višta", "antis", "kiaulė", "avis"]},
+    {"id": "maistas", "name": "Maistas", "words": ["obuolys", "duona", "pienas", "bananas", "sriuba", "vanduo"]},
+    {"id": "seima", "name": "Šeima", "words": ["mama", "tėtis", "močiutė", "senelis", "brolis", "sesė"]},
+    {"id": "jausmai", "name": "Jausmai", "words": ["linksmas", "liūdnas", "piktas", "išsigandęs", "pavargęs", "ramus"]}
+  ]
+}
