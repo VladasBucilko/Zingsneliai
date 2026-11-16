@@ -67,11 +67,18 @@ func _draw_icon(c: Vector2, s: float) -> void:
 		Icon.PUZZLE:
 			draw_rect(Rect2(o + Vector2(5, 5) * s, Vector2(14, 14) * s), col, false, w)
 		Icon.GAMES:
-			# Three toy shapes: circle, triangle, square ("play")
-			draw_arc(o + Vector2(7.5, 8) * s, 4.5 * s, 0, TAU, 40, col, w, true)
-			draw_polyline(PackedVector2Array([o + Vector2(16.5, 3.5) * s, o + Vector2(21.5, 12) * s,
-				o + Vector2(11.5, 12) * s, o + Vector2(16.5, 3.5) * s]), col, w, true)
-			draw_rect(Rect2(o + Vector2(8, 14.5) * s, Vector2(8, 7) * s), col, false, w)
+			# Three toy shapes, each its own colour ("play"): filled, soft outline.
+			var circle_c := o + Vector2(7.5, 8) * s
+			draw_circle(circle_c, 4.5 * s, Color("#F2A7A0"))          # soft coral
+			draw_arc(circle_c, 4.5 * s, 0, TAU, 40, col, w * 0.8, true)
+			var tri := PackedVector2Array([o + Vector2(16.5, 3.5) * s, o + Vector2(21.5, 12) * s,
+				o + Vector2(11.5, 12) * s])
+			draw_colored_polygon(tri, Color("#F6D77A"))                # butter yellow
+			tri.append(tri[0])
+			draw_polyline(tri, col, w * 0.8, true)
+			var sq := Rect2(o + Vector2(8, 14.5) * s, Vector2(8, 7) * s)
+			draw_rect(sq, Color("#9FD3B4"))                            # mint green
+			draw_rect(sq, col, false, w * 0.8)
 		Icon.PLAN:
 			# board with three cards in a row
 			draw_rect(Rect2(o + Vector2(2, 5) * s, Vector2(20, 14) * s), col, false, w)
