@@ -23,12 +23,37 @@ func _ready() -> void:
 	var lock := RoundButton.new(RoundButton.Kind.LOCK)
 	lock.modulate.a = 0.6
 	lock.disabled = true # parent area comes later
-	lock.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	lock.offset_left = -80 - RoundButton.SIZE
-	lock.offset_right = -80
-	lock.offset_top = 56
-	lock.offset_bottom = 56 + RoundButton.SIZE
 	add_child(lock)
+
+	# Quit (not on iOS: Apple doesn't allow apps to close themselves).
+	var right := 80.0
+	if OS.get_name() != "iOS":
+		var quit := RoundButton.new(RoundButton.Kind.QUIT)
+		quit.pressed.connect(func(): get_tree().quit())
+		var caption := Label.new()
+		caption.text = "Išeiti"
+		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		caption.add_theme_font_size_override("font_size", 26)
+		caption.add_theme_color_override("font_color", Palette.TEXT_MUTED)
+		caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var box := VBoxContainer.new()
+		box.name = "Quit"
+		box.add_theme_constant_override("separation", 6)
+		box.add_child(quit)
+		box.add_child(caption)
+		add_child(box)
+		_top_right(box, right)
+		box.offset_bottom = 56 + RoundButton.SIZE + 40 # room for the caption
+		right += RoundButton.SIZE + 32.0
+	_top_right(lock, right)
+
+
+func _top_right(c: Control, right: float) -> void:
+	c.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	c.offset_left = -right - RoundButton.SIZE
+	c.offset_right = -right
+	c.offset_top = 56
+	c.offset_bottom = 56 + RoundButton.SIZE
 
 
 func _open(label: String, scene: String) -> void:
