@@ -1,0 +1,12 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "items": [
+        {"word": "šuo", "say": "šuo sako", "text": "Šuo sako: au au!"},
+        {"word": "katė", "say": "katė sako", "text": "Katė sako: miau!"},
+        {"word": "karvė", "say": "karvė sako", "text": "Karvė sako: mū!"}
+      ]
+    }
+  ]
+}

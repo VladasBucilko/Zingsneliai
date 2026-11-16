@@ -1,0 +1,13 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "rounds": [
+        {"target": "šuo", "prompt": "Surask šunį", "choices": ["šuo", "katė"]},
+        {"target": "karvė", "prompt": "Surask karvę", "choices": ["katė", "karvė"]},
+        {"target": "katė", "prompt": "Surask katę", "choices": ["katė", "šuo"]},
+        {"target": "šuo", "prompt": "Surask šunį", "choices": ["karvė", "šuo"]}
+      ]
+    }
+  ]
+}

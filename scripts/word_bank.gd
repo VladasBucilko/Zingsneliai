@@ -32,10 +32,15 @@ static func theme_words(theme_id: String) -> Array:
 
 
 static func slug(word: String) -> String:
+	# "Surask šunį." -> "surask_suni": transliterate, spaces -> _, drop punctuation.
 	var out := ""
-	for ch in word.to_lower():
-		out += _TRANSLIT.get(ch, ch)
-	return out.replace(" ", "_")
+	for ch in word.to_lower().strip_edges():
+		var c: String = _TRANSLIT.get(ch, ch)
+		if c == " ":
+			out += "_"
+		elif (c >= "a" and c <= "z") or (c >= "0" and c <= "9") or c == "_":
+			out += c
+	return out
 
 
 static func photo(word: String) -> Texture2D:

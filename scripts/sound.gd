@@ -28,6 +28,16 @@ func say(word: String) -> bool:
 	return true
 
 
+## Speak and wait until the clip ends (returns at once if nothing played).
+func say_wait(word: String) -> void:
+	if say(word):
+		await _voice.finished
+
+
+func stop_voice() -> void:
+	_voice.stop()
+
+
 func sfx(name: String, pitch := 1.0) -> void:
 	if not Settings.sound_on:
 		return

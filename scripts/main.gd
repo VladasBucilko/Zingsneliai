@@ -1,24 +1,19 @@
 extends Control
-## Home screen: big, calm tiles for each activity (matches Figma "01 Home").
+## Home screen: two big sections – "Žaidimukai" (games) and "Mano planas" (planner).
 
-const ACTIVITIES := [
-	# label, icon, accent, scene (empty = coming soon)
-	["Burbulai", ActivityTile.Icon.BUBBLES, Palette.SKY, "res://scenes/games/bubble_pop.tscn"],
-	["Poros", ActivityTile.Icon.MATCHING, Palette.PEACH, "res://scenes/games/matching.tscn"],
-	["Rūšiuok", ActivityTile.Icon.SORTING, Palette.SAGE, ""],
-	["Surask", ActivityTile.Icon.FIND, Palette.BUTTER, ""],
-	["Dėlionė", ActivityTile.Icon.PUZZLE, Palette.LAVENDER, ""],
-	["Kartok", ActivityTile.Icon.SOUND, Palette.ROSE, ""],
+const SECTIONS := [
+	# label, icon, accent, scene, spoken
+	["Žaidimukai", ActivityTile.Icon.GAMES, Palette.SKY, "res://scenes/games_menu.tscn", "žaidimukai"],
+	["Mano planas", ActivityTile.Icon.PLAN, Palette.SAGE, "res://scenes/planner.tscn", "mano planas"],
 ]
 
 @onready var _grid: GridContainer = $Activities
 
 
 func _ready() -> void:
-	for a in ACTIVITIES:
-		var t := ActivityTile.new().setup(a[0], a[1], a[2], a[3] != "")
-		if a[3] != "":
-			t.pressed.connect(_open.bind(a[0], a[3]))
+	for a in SECTIONS:
+		var t := ActivityTile.new().setup(a[0], a[1], a[2], true, Vector2(600, 540))
+		t.pressed.connect(_open.bind(a[4], a[3]))
 		_grid.add_child(t)
 	var lock := RoundButton.new(RoundButton.Kind.LOCK)
 	lock.modulate.a = 0.6
