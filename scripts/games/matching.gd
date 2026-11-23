@@ -123,7 +123,4 @@ func _repeat() -> void:
 
 func _finish() -> void:
 	await get_tree().create_timer(0.9).timeout
-	var w := WellDone.make(false)
-	w.replay.connect(func(): w.queue_free(); _start(int(_level.id)))
-	w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
-	add_child(w)
+	GameUI.well_done(self, LEVELS_PATH, int(_level.id), _start)

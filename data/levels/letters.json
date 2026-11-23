@@ -1,19 +1,10 @@
 {
   "levels": [
-    {
-      "id": 1,
-      "instruction": "atspėk žodį",
-      "answer": "stalas",
-      "answer_label": "Stalas",
-      "clues": [
-        {"word": "sala", "label": "Sala"},
-        {"word": "traktorius", "label": "Traktorius"},
-        {"word": "arklys", "label": "Arklys"},
-        {"word": "laivas", "label": "Laivas"},
-        {"word": "avilys", "label": "Avilys"},
-        {"word": "sūpynės", "label": "Sūpynės"}
-      ],
-      "extra_letters": ["K", "M", "O"]
-    }
+    {"id": 1, "instruction": "atspėk žodį", "answer": "stalas", "answer_label": "Stalas", "clues": [{"word": "sala", "label": "Sala"}, {"word": "traktorius", "label": "Traktorius"}, {"word": "arklys", "label": "Arklys"}, {"word": "laivas", "label": "Laivas"}, {"word": "avilys", "label": "Avilys"}, {"word": "sūpynės", "label": "Sūpynės"}], "extra_letters": ["K", "M", "O"]},
+    {"id": 2, "instruction": "atspėk žodį", "answer": "sala", "answer_label": "Sala", "clues": [{"word": "stalas", "label": "Stalas"}, {"word": "avis", "label": "Avis"}, {"word": "lėktuvas", "label": "Lėktuvas"}, {"word": "antis", "label": "Antis"}], "extra_letters": ["M", "O", "K"]},
+    {"id": 3, "instruction": "atspėk žodį", "answer": "lova", "answer_label": "Lova", "clues": [{"word": "laivas", "label": "Laivas"}, {"word": "obuolys", "label": "Obuolys"}, {"word": "višta", "label": "Višta"}, {"word": "arklys", "label": "Arklys"}], "extra_letters": ["S", "E", "N"]},
+    {"id": 4, "instruction": "atspėk žodį", "answer": "morka", "answer_label": "Morka", "clues": [{"word": "mašina", "label": "Mašina"}, {"word": "obuolys", "label": "Obuolys"}, {"word": "rožė", "label": "Rožė"}, {"word": "kiaulė", "label": "Kiaulė"}, {"word": "avilys", "label": "Avilys"}], "extra_letters": ["T", "L", "U"]},
+    {"id": 5, "instruction": "atspėk žodį", "answer": "duona", "answer_label": "Duona", "clues": [{"word": "drugelis", "label": "Drugelis"}, {"word": "uogos", "label": "Uogos"}, {"word": "obuolys", "label": "Obuolys"}, {"word": "namas", "label": "Namas"}, {"word": "avis", "label": "Avis"}], "extra_letters": ["K", "S", "E"]},
+    {"id": 6, "instruction": "atspėk žodį", "answer": "tortas", "answer_label": "Tortas", "clues": [{"word": "traktorius", "label": "Traktorius"}, {"word": "obuolys", "label": "Obuolys"}, {"word": "rožė", "label": "Rožė"}, {"word": "triušis", "label": "Triušis"}, {"word": "arklys", "label": "Arklys"}, {"word": "sala", "label": "Sala"}], "extra_letters": ["M", "K", "E"]}
   ]
 }

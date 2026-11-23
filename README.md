@@ -22,15 +22,16 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   Drag picture magnets from the tray onto the board to build a plan or story; tap a magnet to hear it;
   drag between spaces to swap, off the board to remove; the speaker reads the plan in order. Saved on
   the device (`user://plan.json`). Pictures and words in `data/planner.json`.
-- **Žaidimukai** `scenes/games_menu.tscn` – the mini-games (`scenes/games/`, `scripts/games/`), one level each, levels in `data/levels/*.json`:
+- **Žaidimukai** `scenes/games_menu.tscn` – the mini-games (`scenes/games/`, `scripts/games/`), 6 levels each (Burbulai: generated), levels in `data/levels/*.json`. The "Šaunu!" card has a → button to the next level:
   - **Burbulai** `bubble_pop` – tap slowly rising bubbles; levels from `bubble_level_generator.gd` (deterministic; no fail)
   - **Poros** `matching` – tap a picture, then its twin in the other row
-  - **Rūšiuok** `sorting` – drag (or tap, then tap a basket) each picture into Gyvūnai / Maistas
-  - **Surask** `find` – hear "Surask šunį", tap the right picture (pictures only, no words)
-  - **Dėlionė** `puzzle` – drag pieces into the faint picture; they snap in when close
+  - **Rūšiuok** `sorting` – drag (or tap, then tap a basket) each picture into baskets (Gyvūnai / Maistas / Transportas, Vaisiai / Daržovės; 2–3 baskets)
+  - **Surask** `find` – hear "Surask šunį", tap the right picture (pictures only, no words; 2–4 pictures)
+  - **Dėlionė** `puzzle` – drag pieces into the faint picture; they snap in when close (2 → 6 pieces)
   - **Kartok** `repeat` – hear "Šuo sako: au au!", say it back; any sound heard (or tapping the mic) counts. Nothing is recorded or stored.
-  - **Atspėk** `letters` – word riddle: a picture above each empty box; put each picture's first letter in its box to find the hidden word (sala, traktorius, arklys, laivas, avilys, sūpynės → STALAS). Drag a letter or tap letter then box; tap a picture to hear it.
+  - **Atspėk** `letters` – word riddle: a picture above each empty box; put each picture's first letter in its box to find the hidden word (STALAS, SALA, LOVA, MORKA, DUONA, TORTAS). Drag a letter or tap letter then box; tap a picture to hear it.
 - `scripts/ui/` – shared controls (RoundButton, PictureCard, Basket, MicButton, WellDone, GameUI helpers)
+- `docs/voice_todo.md` – words/phrases that still need a recorded voice clip (file names included)
 - `scripts/word_bank.gd` – finds a word's picture/voice by ASCII slug (`Surask šunį` → `surask_suni.mp3`)
 - `scripts/sound.gd` (autoload `Sound`) – voice + soft effects, respects parent settings
 

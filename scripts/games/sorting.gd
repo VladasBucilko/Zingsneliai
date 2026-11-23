@@ -38,9 +38,13 @@ func _start(id: int) -> void:
 	var accents := [Palette.SAGE, Palette.PEACH, Palette.SKY]
 	var row := $Baskets as HBoxContainer
 	_queue.clear()
+	var three: bool = _level.get("baskets", []).size() >= 3
+	row.add_theme_constant_override("separation", 60 if three else 120)
 	var i := 0
 	for bd in _level.get("baskets", []):
 		var b := Basket.new().setup(bd.name, bd.get("icon", bd.words[0]), bd.words, accents[i % accents.size()])
+		if three:
+			b.custom_minimum_size.x = 440
 		b.pressed.connect(_on_basket_pressed.bind(b))
 		row.add_child(b)
 		_baskets.append(b)
@@ -62,10 +66,7 @@ func _intro() -> void:
 func _next_card() -> void:
 	if _queue.is_empty():
 		await get_tree().create_timer(0.6).timeout
-		var w := WellDone.make(false)
-		w.replay.connect(func(): w.queue_free(); _start(int(_level.get("id", 1))))
-		w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
-		add_child(w)
+		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
 		return
 	var word: String = _queue.pop_front()
 	_card = PictureCard.new().setup(word, Palette.BUTTER)
