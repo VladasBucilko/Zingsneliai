@@ -1,13 +1,10 @@
 {
   "levels": [
-    {
-      "id": 1,
-      "rounds": [
-        {"target": "šuo", "prompt": "Surask šunį", "choices": ["šuo", "katė"]},
-        {"target": "karvė", "prompt": "Surask karvę", "choices": ["katė", "karvė"]},
-        {"target": "katė", "prompt": "Surask katę", "choices": ["katė", "šuo"]},
-        {"target": "šuo", "prompt": "Surask šunį", "choices": ["karvė", "šuo"]}
-      ]
-    }
+    {"id": 1, "rounds": [{"target": "šuo", "prompt": "Surask šunį", "choices": ["šuo", "katė"]}, {"target": "karvė", "prompt": "Surask karvę", "choices": ["katė", "karvė"]}, {"target": "katė", "prompt": "Surask katę", "choices": ["katė", "šuo"]}, {"target": "šuo", "prompt": "Surask šunį", "choices": ["karvė", "šuo"]}]},
+    {"id": 2, "rounds": [{"target": "avis", "prompt": "Surask avį", "choices": ["avis", "antis", "arklys"]}, {"target": "antis", "prompt": "Surask antį", "choices": ["višta", "antis", "avis"]}, {"target": "arklys", "prompt": "Surask arklį", "choices": ["arklys", "karvė", "avis"]}, {"target": "višta", "prompt": "Surask vištą", "choices": ["antis", "kiaulė", "višta"]}]},
+    {"id": 3, "rounds": [{"target": "duona", "prompt": "Surask duoną", "choices": ["duona", "obuolys", "pienas"]}, {"target": "pienas", "prompt": "Surask pieną", "choices": ["bananas", "pienas", "duona"]}, {"target": "obuolys", "prompt": "Surask obuolį", "choices": ["tortas", "duona", "obuolys"]}, {"target": "tortas", "prompt": "Surask tortą", "choices": ["tortas", "uogos", "pienas"]}]},
+    {"id": 4, "rounds": [{"target": "mašina", "prompt": "Surask mašiną", "choices": ["mašina", "laivas", "lėktuvas", "traktorius"]}, {"target": "lėktuvas", "prompt": "Surask lėktuvą", "choices": ["laivas", "lėktuvas", "mašina", "traktorius"]}, {"target": "laivas", "prompt": "Surask laivą", "choices": ["traktorius", "mašina", "laivas", "lėktuvas"]}, {"target": "traktorius", "prompt": "Surask traktorių", "choices": ["lėktuvas", "traktorius", "laivas", "mašina"]}]},
+    {"id": 5, "rounds": [{"target": "triušis", "prompt": "Surask triušį", "choices": ["katė", "triušis", "namas", "duona"]}, {"target": "drugelis", "prompt": "Surask drugelį", "choices": ["drugelis", "rožė", "antis", "mašina"]}, {"target": "namas", "prompt": "Surask namą", "choices": ["laivas", "obuolys", "namas", "kiaulė"]}, {"target": "rožė", "prompt": "Surask rožę", "choices": ["uogos", "drugelis", "pienas", "rožė"]}]},
+    {"id": 6, "rounds": [{"target": "kriaušė", "prompt": "Surask kriaušę", "choices": ["obuolys", "kriaušė", "bananas", "pomidoras"]}, {"target": "morka", "prompt": "Surask morką", "choices": ["agurkas", "pomidoras", "morka", "kriaušė"]}, {"target": "pomidoras", "prompt": "Surask pomidorą", "choices": ["pomidoras", "obuolys", "uogos", "morka"]}, {"target": "agurkas", "prompt": "Surask agurką", "choices": ["morka", "bananas", "kriaušė", "agurkas"]}]}
   ]
 }

@@ -1,5 +1,10 @@
 {
   "levels": [
-    {"id": 1, "word": "katė", "cols": 2, "rows": 1}
+    {"id": 1, "word": "katė", "cols": 2, "rows": 1},
+    {"id": 2, "word": "karvė", "cols": 3, "rows": 1},
+    {"id": 3, "word": "traktorius", "cols": 2, "rows": 2},
+    {"id": 4, "word": "kiaulė", "cols": 2, "rows": 2},
+    {"id": 5, "word": "laivas", "cols": 3, "rows": 2},
+    {"id": 6, "word": "namas", "cols": 3, "rows": 2}
   ]
 }

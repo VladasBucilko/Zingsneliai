@@ -39,19 +39,18 @@ func _show_round() -> void:
 	_cards.clear()
 	if _round >= _rounds.size():
 		await get_tree().create_timer(0.5).timeout
-		var w := WellDone.make(false)
-		w.replay.connect(func(): w.queue_free(); _start(int(_level.get("id", 1))))
-		w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
-		add_child(w)
+		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
 		return
 	var r: Dictionary = _rounds[_round]
 	_prompt.text = r.prompt
+	_row.add_theme_constant_override("separation", 120 if r.choices.size() <= 3 else 64)
 	var i := 0
 	for word in r.choices:
 		# Pictures only: the child finds it by listening, not by reading.
 		var c := PictureCard.new().setup(word, Palette.ACCENTS[i % Palette.ACCENTS.size()], false)
-		c.custom_minimum_size = Vector2(360, 360)
-		c.pivot_offset = Vector2(180, 180)
+		var side := 360.0 if r.choices.size() <= 3 else 300.0
+		c.custom_minimum_size = Vector2(side, side)
+		c.pivot_offset = Vector2(side, side) / 2.0
 		c.pressed.connect(_on_pick.bind(c))
 		_row.add_child(c)
 		_cards.append(c)

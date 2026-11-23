@@ -1,12 +1,10 @@
 {
   "levels": [
-    {
-      "id": 1,
-      "items": [
-        {"word": "šuo", "say": "šuo sako", "text": "Šuo sako: au au!"},
-        {"word": "katė", "say": "katė sako", "text": "Katė sako: miau!"},
-        {"word": "karvė", "say": "karvė sako", "text": "Karvė sako: mū!"}
-      ]
-    }
+    {"id": 1, "items": [{"word": "šuo", "say": "šuo sako", "text": "Šuo sako: au au!"}, {"word": "katė", "say": "katė sako", "text": "Katė sako: miau!"}, {"word": "karvė", "say": "karvė sako", "text": "Karvė sako: mū!"}]},
+    {"id": 2, "items": [{"word": "avis", "say": "avis sako", "text": "Avis sako: bė bė!"}, {"word": "antis", "say": "antis sako", "text": "Antis sako: krt krt!"}, {"word": "višta", "say": "višta sako", "text": "Višta sako: ko ko ko!"}]},
+    {"id": 3, "items": [{"word": "kiaulė", "say": "kiaulė sako", "text": "Kiaulė sako: kriu kriu!"}, {"word": "arklys", "say": "arklys sako", "text": "Arklys sako: i-ha-ha!"}, {"word": "karvė", "say": "karvė sako", "text": "Karvė sako: mū!"}]},
+    {"id": 4, "items": [{"word": "mašina", "say": "mašina sako", "text": "Mašina sako: pyp pyp!"}, {"word": "traktorius", "say": "traktorius sako", "text": "Traktorius sako: tr tr tr!"}, {"word": "lėktuvas", "say": "lėktuvas sako", "text": "Lėktuvas sako: ūūū!"}]},
+    {"id": 5, "items": [{"word": "obuolys", "say": "obuolys", "text": "Obuolys"}, {"word": "bananas", "say": "bananas", "text": "Bananas"}, {"word": "duona", "say": "duona", "text": "Duona"}]},
+    {"id": 6, "items": [{"word": "stalas", "say": "stalas", "text": "Stalas"}, {"word": "namas", "say": "namas", "text": "Namas"}, {"word": "sala", "say": "sala", "text": "Sala"}]}
   ]
 }

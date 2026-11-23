@@ -1,5 +1,10 @@
 {
   "levels": [
-    {"id": 1, "theme": "gyvunai", "words": ["šuo", "katė", "karvė"], "show_word": true}
+    {"id": 1, "theme": "gyvunai", "words": ["šuo", "katė", "karvė"], "show_word": true},
+    {"id": 2, "theme": "gyvunai", "words": ["arklys", "avis", "antis"], "show_word": true},
+    {"id": 3, "theme": "gyvunai", "words": ["kiaulė", "višta", "šuo", "katė"], "show_word": true},
+    {"id": 4, "theme": "maistas", "words": ["obuolys", "bananas", "duona", "pienas"], "show_word": true},
+    {"id": 5, "theme": "transportas", "words": ["traktorius", "laivas", "mašina", "lėktuvas"], "show_word": true},
+    {"id": 6, "theme": "mix", "words": ["triušis", "kriaušė", "drugelis", "namas"], "show_word": false}
   ]
 }

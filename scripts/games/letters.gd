@@ -201,7 +201,4 @@ func _reveal() -> void:
 	await get_tree().create_timer(0.4).timeout
 	await Sound.say_wait(answer)
 	await get_tree().create_timer(0.8).timeout
-	var w := WellDone.make(false)
-	w.replay.connect(func(): w.queue_free(); _busy = false; _start(int(_level.get("id", 1))))
-	w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
-	add_child(w)
+	GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), func(id: int): _busy = false; _start(id))

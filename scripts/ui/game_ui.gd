@@ -75,3 +75,27 @@ static func load_level(path: String, id: int) -> Dictionary:
 		if int(l.get("id", 0)) == id:
 			return l
 	return levels[0] if not levels.is_empty() else {}
+
+
+static func has_level(path: String, id: int) -> bool:
+	var f := FileAccess.open(path, FileAccess.READ)
+	if f == null:
+		return false
+	var parsed = JSON.parse_string(f.get_as_text())
+	if not parsed is Dictionary:
+		return false
+	for l in parsed.get("levels", []):
+		if int(l.get("id", 0)) == id:
+			return true
+	return false
+
+
+## "Šaunu!" card with replay, next level (when there is one) and home.
+## restart(id) starts the given level again on the same screen.
+static func well_done(screen: Control, path: String, id: int, restart: Callable) -> WellDone:
+	var w := WellDone.make(has_level(path, id + 1))
+	w.replay.connect(func(): w.queue_free(); restart.call(id))
+	w.next.connect(func(): w.queue_free(); restart.call(id + 1))
+	w.home.connect(func(): screen.get_tree().change_scene_to_file(GAMES))
+	screen.add_child(w)
+	return w

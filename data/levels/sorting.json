@@ -1,12 +1,10 @@
 {
   "levels": [
-    {
-      "id": 1,
-      "instruction": "sudėk į krepšelius",
-      "baskets": [
-        {"name": "Gyvūnai", "icon": "šuo", "words": ["šuo", "katė"]},
-        {"name": "Maistas", "icon": "obuolys", "words": ["obuolys", "bananas"]}
-      ]
-    }
+    {"id": 1, "instruction": "sudėk į krepšelius", "baskets": [{"name": "Gyvūnai", "icon": "šuo", "words": ["šuo", "katė"]}, {"name": "Maistas", "icon": "obuolys", "words": ["obuolys", "bananas"]}]},
+    {"id": 2, "instruction": "sudėk į krepšelius", "baskets": [{"name": "Gyvūnai", "icon": "šuo", "words": ["avis", "antis", "kiaulė"]}, {"name": "Maistas", "icon": "obuolys", "words": ["duona", "pienas", "bananas"]}]},
+    {"id": 3, "instruction": "sudėk į krepšelius", "baskets": [{"name": "Gyvūnai", "icon": "šuo", "words": ["arklys", "višta", "katė"]}, {"name": "Transportas", "icon": "mašina", "words": ["traktorius", "laivas", "lėktuvas"]}]},
+    {"id": 4, "instruction": "sudėk į krepšelius", "baskets": [{"name": "Gyvūnai", "icon": "šuo", "words": ["karvė", "triušis"]}, {"name": "Maistas", "icon": "obuolys", "words": ["duona", "tortas"]}, {"name": "Transportas", "icon": "mašina", "words": ["mašina", "laivas"]}]},
+    {"id": 5, "instruction": "sudėk į krepšelius", "baskets": [{"name": "Vaisiai", "icon": "obuolys", "words": ["obuolys", "bananas", "kriaušė"]}, {"name": "Daržovės", "icon": "morka", "words": ["morka", "agurkas", "pomidoras"]}]},
+    {"id": 6, "instruction": "sudėk į krepšelius", "baskets": [{"name": "Gyvūnai", "icon": "šuo", "words": ["šuo", "avis", "antis"]}, {"name": "Maistas", "icon": "obuolys", "words": ["uogos", "pienas", "kriaušė"]}, {"name": "Transportas", "icon": "mašina", "words": ["traktorius", "mašina", "lėktuvas"]}]}
   ]
 }

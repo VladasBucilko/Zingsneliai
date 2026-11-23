@@ -57,10 +57,7 @@ func _present(first := false) -> void:
 		_card.queue_free()
 		_card = null
 	if _i >= _items.size():
-		var w := WellDone.make(false)
-		w.replay.connect(func(): w.queue_free(); _start(int(_level.get("id", 1))))
-		w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
-		add_child(w)
+		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
 		return
 	var item: Dictionary = _items[_i]
 	_title.text = item.get("text", item.word)

@@ -36,13 +36,7 @@ func _start(id: int) -> void:
 	var tex_size := _tex.get_size()
 	var piece := Vector2(BOARD / cols, BOARD / rows)
 	var src := Vector2(tex_size.x / cols, tex_size.y / rows)
-	# Waiting spots: left and right of the board, alternating.
-	var spots: Array[Vector2] = []
-	for i in cols * rows:
-		var left := i % 2 == 0
-		var x := -piece.x - 120.0 if left else BOARD + 120.0
-		var y := (BOARD - piece.y) / 2.0 + (i / 2) * 40.0 - 20.0 * ((cols * rows - 1) / 2)
-		spots.append(Vector2(x, y))
+	var spots := _waiting_spots(cols * rows, piece)
 	spots.shuffle()
 	var idx := 0
 	for r in rows:
@@ -56,6 +50,30 @@ func _start(id: int) -> void:
 	Sound.say("sudėk dėlionę")
 
 
+## Waiting spots: half the pieces left of the board, half right, each side in a
+## small grid (one column if the pieces fit stacked, otherwise two).
+func _waiting_spots(n: int, piece: Vector2) -> Array[Vector2]:
+	const GAP := 24.0
+	const MARGIN := 90.0       # space between the board and the pieces
+	const MAX_H := 700.0       # pieces must stay on screen vertically
+	var spots: Array[Vector2] = []
+	var per_side := [ceili(n / 2.0), n / 2]
+	for side in 2:
+		var k: int = per_side[side]
+		if k == 0:
+			continue
+		var cols := 1 if k * piece.y + (k - 1) * GAP <= MAX_H else 2
+		var rows := ceili(float(k) / cols)
+		var block := Vector2(cols * piece.x + (cols - 1) * GAP, rows * piece.y + (rows - 1) * GAP)
+		var x0 := -MARGIN - block.x if side == 0 else BOARD + MARGIN
+		var y0 := (BOARD - block.y) / 2.0
+		for j in k:
+			var c := j % cols
+			var r := j / cols
+			spots.append(Vector2(x0 + c * (piece.x + GAP), y0 + r * (piece.y + GAP)))
+	return spots
+
+
 func _on_placed(_p: PuzzlePiece) -> void:
 	_placed += 1
 	if _placed < _pieces.size():
@@ -65,7 +83,4 @@ func _on_placed(_p: PuzzlePiece) -> void:
 	Sound.sfx("chime")
 	await Sound.say_wait(_level.get("word", ""))
 	await get_tree().create_timer(0.4).timeout
-	var w := WellDone.make(false)
-	w.replay.connect(func(): w.queue_free(); _start(int(_level.get("id", 1))))
-	w.home.connect(func(): get_tree().change_scene_to_file("res://scenes/games_menu.tscn"))
-	add_child(w)
+	GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
