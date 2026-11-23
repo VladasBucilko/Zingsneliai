@@ -9,18 +9,29 @@ const GAMES := [
 	["Surask", ActivityTile.Icon.FIND, Palette.BUTTER, "res://scenes/games/find.tscn"],
 	["Dėlionė", ActivityTile.Icon.PUZZLE, Palette.LAVENDER, "res://scenes/games/puzzle.tscn"],
 	["Kartok", ActivityTile.Icon.SOUND, Palette.ROSE, "res://scenes/games/repeat.tscn"],
+	["Atspėk", ActivityTile.Icon.LETTERS, Palette.APRICOT, "res://scenes/games/letters.tscn"],
 ]
 
-@onready var _grid: GridContainer = $Activities
+const PER_ROW := 4
+
+@onready var _rows: VBoxContainer = $Activities
 
 
 func _ready() -> void:
 	GameUI.add_home(self, GameUI.HOME)
 	GameUI.add_title(self, "Žaidimukai")
-	for g in GAMES:
+	# Rows of up to 4 tiles, each row centred (so a short last row stays centred).
+	var row: HBoxContainer
+	for i in GAMES.size():
+		if i % PER_ROW == 0:
+			row = HBoxContainer.new()
+			row.alignment = BoxContainer.ALIGNMENT_CENTER
+			row.add_theme_constant_override("separation", 48)
+			_rows.add_child(row)
+		var g: Array = GAMES[i]
 		var t := ActivityTile.new().setup(g[0], g[1], g[2], true)
 		t.pressed.connect(_open.bind(g[0], g[3]))
-		_grid.add_child(t)
+		row.add_child(t)
 
 
 func _open(label: String, scene: String) -> void:

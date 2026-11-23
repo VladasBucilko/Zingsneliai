@@ -29,6 +29,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   - **Surask** `find` – hear "Surask šunį", tap the right picture (pictures only, no words)
   - **Dėlionė** `puzzle` – drag pieces into the faint picture; they snap in when close
   - **Kartok** `repeat` – hear "Šuo sako: au au!", say it back; any sound heard (or tapping the mic) counts. Nothing is recorded or stored.
+  - **Atspėk** `letters` – word riddle: a picture above each empty box; put each picture's first letter in its box to find the hidden word (sala, traktorius, arklys, laivas, avilys, sūpynės → STALAS). Drag a letter or tap letter then box; tap a picture to hear it.
 - `scripts/ui/` – shared controls (RoundButton, PictureCard, Basket, MicButton, WellDone, GameUI helpers)
 - `scripts/word_bank.gd` – finds a word's picture/voice by ASCII slug (`Surask šunį` → `surask_suni.mp3`)
 - `scripts/sound.gd` (autoload `Sound`) – voice + soft effects, respects parent settings
