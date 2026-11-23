@@ -2,7 +2,7 @@ class_name ActivityTile
 extends Button
 ## Home-screen activity tile (matches Figma "ActivityTile").
 
-enum Icon { BUBBLES, MATCHING, SORTING, FIND, PUZZLE, SOUND, GAMES, PLAN }
+enum Icon { BUBBLES, MATCHING, SORTING, FIND, PUZZLE, SOUND, GAMES, PLAN, LETTERS }
 
 var label_text := ""
 var icon_kind: Icon = Icon.BUBBLES
@@ -84,6 +84,15 @@ func _draw_icon(c: Vector2, s: float) -> void:
 			draw_rect(Rect2(o + Vector2(2, 5) * s, Vector2(20, 14) * s), col, false, w)
 			for i in 3:
 				draw_rect(Rect2(o + Vector2(4.5 + i * 5.5, 8.5) * s, Vector2(4, 7) * s), col, false, w * 0.8)
+		Icon.LETTERS:
+			# A letter block "A" above an empty "_" line
+			draw_rect(Rect2(o + Vector2(6, 2) * s, Vector2(12, 12) * s), col, false, w)
+			var f := get_theme_default_font()
+			var fs := int(10 * s)
+			var tw := f.get_string_size("A", HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+			draw_string(f, o + Vector2(12, 12) * s - Vector2(tw / 2.0, 0), "A", HORIZONTAL_ALIGNMENT_LEFT, -1, fs, col)
+			draw_line(o + Vector2(5, 20) * s, o + Vector2(10, 20) * s, col, w, true)
+			draw_line(o + Vector2(14, 20) * s, o + Vector2(19, 20) * s, col, w, true)
 		Icon.SOUND:
 			draw_rect(Rect2(o + Vector2(9, 3) * s, Vector2(6, 11) * s), col, false, w)
 			draw_arc(o + Vector2(12, 11) * s, 6 * s, 0, PI, 24, col, w, true)

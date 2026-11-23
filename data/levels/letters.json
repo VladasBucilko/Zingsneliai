@@ -1,0 +1,19 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "instruction": "atspėk žodį",
+      "answer": "stalas",
+      "answer_label": "Stalas",
+      "clues": [
+        {"word": "sala", "label": "Sala"},
+        {"word": "traktorius", "label": "Traktorius"},
+        {"word": "arklys", "label": "Arklys"},
+        {"word": "laivas", "label": "Laivas"},
+        {"word": "avilys", "label": "Avilys"},
+        {"word": "sūpynės", "label": "Sūpynės"}
+      ],
+      "extra_letters": ["K", "M", "O"]
+    }
+  ]
+}
