@@ -26,6 +26,7 @@ unless the row says otherwise.
 | 2026-11-23 | Voice: Atspėk words + "atspėk žodį" (calm tag) | Eleven v4 | 8 | 345 | 4,546 |
 | 2026-11-23 | Pictures for levels 2–6 (avis … namas) | GPT Image 2.5 | 18 | 3,426 | 7,972 |
 | 2026-11-24 | Voice Changer test: agurkas, antis, avis (own recording) | Multilingual STS v2 | 1 | ? (done in the ElevenLabs app) | 7,972 + ? |
+| 2026-11-24 | Voice Changer: 16 words drugelis … višta (own recording, 30 s) | Multilingual STS v2 | 1 | ? (done in the ElevenLabs app) | 7,972 + ? |
 
 **Totals so far:**
 - Pictures: 38 → 7,234 credits (≈ 91%).
