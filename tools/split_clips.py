@@ -140,7 +140,8 @@ def main(argv):
         export(args.take, a, b, dur, OUT_DIR / f"{s}.ogg")
         written += 1
     print(f"Wrote {written} clip(s) to {OUT_DIR.relative_to(ROOT)}/. "
-          "Run python3 tools/audio_status.py to update the list.")
+          "Open the project in Godot once (it imports new sounds), then run "
+          "python3 tools/audio_status.py to update the list.")
     return 0
 
 
