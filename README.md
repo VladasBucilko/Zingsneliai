@@ -39,6 +39,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
 - `godot --headless -s tools/bubble_levels.gd` – print the bubble difficulty curve
 - `godot --headless -s tools/bubble_levels.gd -- --export 20` – write 20 generated levels to `data/levels/bubbles_generated.json`
 - `python3 tools/audio_status.py` – check every word/phrase the app says against the clips and pictures; rewrites `docs/voice_todo.md` (`--json` for raw status, `--check` exits 1 if anything is missing)
+- `python3 tools/split_clips.py take.mp3 --missing words` – cut a long recording (words with pauses) into one clip per word, levelled and saved as `assets/audio/words/<name>.ogg`; or give the names yourself: `… take.mp3 agurkas antis avis`
 - `python3 tools/make_sfx.py` – regenerate the soft `pop`/`chime` sounds
 - `python3 tools/square_picture.py in.png out.png` – square-crop a generated picture around its subject (512×512)
 
