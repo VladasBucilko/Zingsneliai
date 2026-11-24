@@ -29,6 +29,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   - **Surask** `find` – hear "Surask šunį", tap the right picture (pictures only, no words; 2–4 pictures)
   - **Dėlionė** `puzzle` – drag pieces into the faint picture; they snap in when close (2 → 6 pieces)
   - **Kartok** `repeat` – hear "Šuo sako: au au!", say it back; any sound heard (or tapping the mic) counts. Nothing is recorded or stored.
+  - **Sekos** `sequence` – a row of random capital letters stays on screen; press the buttons in the same order (the next letter is outlined; after 3 misses the right button pulses). Levels from `sequence_generator.gd`, endless: 2–4 letters (L1–10), +4 every 10 levels up to 16; the row's letters plus a few extra buttons, full alphabet keyboard from L21. Sounds only, no voice; the last level reached is remembered
   - **Atspėk** `letters` – word riddle: a picture above each empty box; put each picture's first letter in its box to find the hidden word (STALAS, SALA, LOVA, MORKA, DUONA, TORTAS). Drag a letter or tap letter then box; tap a picture to hear it.
 - `scripts/ui/` – shared controls (RoundButton, PictureCard, Basket, MicButton, WellDone, GameUI helpers)
 - `docs/credits_log.md` – ElevenLabs credits spent on this project (every generation, with running total)

@@ -1,5 +1,5 @@
 extends Control
-## "Žaidimukai" — the six mini-games.
+## "Žaidimukai" — the mini-games.
 
 const GAMES := [
 	# label, icon, accent, scene
@@ -10,6 +10,7 @@ const GAMES := [
 	["Dėlionė", ActivityTile.Icon.PUZZLE, Palette.LAVENDER, "res://scenes/games/puzzle.tscn"],
 	["Kartok", ActivityTile.Icon.SOUND, Palette.ROSE, "res://scenes/games/repeat.tscn"],
 	["Atspėk", ActivityTile.Icon.LETTERS, Palette.APRICOT, "res://scenes/games/letters.tscn"],
+	["Sekos", ActivityTile.Icon.SEQUENCE, Palette.MINT, "res://scenes/games/sequence.tscn"],
 ]
 
 const PER_ROW := 4
