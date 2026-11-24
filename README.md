@@ -31,13 +31,14 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   - **Kartok** `repeat` – hear "Šuo sako: au au!", say it back; any sound heard (or tapping the mic) counts. Nothing is recorded or stored.
   - **Atspėk** `letters` – word riddle: a picture above each empty box; put each picture's first letter in its box to find the hidden word (STALAS, SALA, LOVA, MORKA, DUONA, TORTAS). Drag a letter or tap letter then box; tap a picture to hear it.
 - `scripts/ui/` – shared controls (RoundButton, PictureCard, Basket, MicButton, WellDone, GameUI helpers)
-- `docs/voice_todo.md` – words/phrases that still need a recorded voice clip (file names included)
+- `docs/voice_todo.md` – words/phrases that still need a recorded voice clip (generated, see Tools)
 - `scripts/word_bank.gd` – finds a word's picture/voice by ASCII slug (`Surask šunį` → `surask_suni.mp3`)
 - `scripts/sound.gd` (autoload `Sound`) – voice + soft effects, respects parent settings
 
 ## Tools
 - `godot --headless -s tools/bubble_levels.gd` – print the bubble difficulty curve
 - `godot --headless -s tools/bubble_levels.gd -- --export 20` – write 20 generated levels to `data/levels/bubbles_generated.json`
+- `python3 tools/audio_status.py` – check every word/phrase the app says against the clips and pictures; rewrites `docs/voice_todo.md` (`--json` for raw status, `--check` exits 1 if anything is missing)
 - `python3 tools/make_sfx.py` – regenerate the soft `pop`/`chime` sounds
 - `python3 tools/square_picture.py in.png out.png` – square-crop a generated picture around its subject (512×512)
 
