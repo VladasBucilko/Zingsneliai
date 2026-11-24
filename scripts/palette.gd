@@ -15,6 +15,7 @@ const BUTTER := Color("#F3E1A0")
 const LAVENDER := Color("#CDBFE3")
 const ROSE := Color("#EFC1C4")
 const APRICOT := Color("#F4D3A1")
+const MINT := Color("#B8DCD3")
 
 const ACCENTS: Array[Color] = [SKY, LAVENDER, PEACH, SAGE, BUTTER, ROSE]
 

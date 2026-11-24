@@ -2,7 +2,7 @@ class_name ActivityTile
 extends Button
 ## Home-screen activity tile (matches Figma "ActivityTile").
 
-enum Icon { BUBBLES, MATCHING, SORTING, FIND, PUZZLE, SOUND, GAMES, PLAN, LETTERS }
+enum Icon { BUBBLES, MATCHING, SORTING, FIND, PUZZLE, SOUND, GAMES, PLAN, LETTERS, SEQUENCE, MEMORY }
 
 var label_text := ""
 var icon_kind: Icon = Icon.BUBBLES
@@ -93,6 +93,26 @@ func _draw_icon(c: Vector2, s: float) -> void:
 			draw_string(f, o + Vector2(12, 12) * s - Vector2(tw / 2.0, 0), "A", HORIZONTAL_ALIGNMENT_LEFT, -1, fs, col)
 			draw_line(o + Vector2(5, 20) * s, o + Vector2(10, 20) * s, col, w, true)
 			draw_line(o + Vector2(14, 20) * s, o + Vector2(19, 20) * s, col, w, true)
+		Icon.SEQUENCE:
+			# A row of three letter boxes: two done (filled), the next one outlined
+			# with a little marker under it.
+			for i in 3:
+				var box := Rect2(o + Vector2(2 + i * 7.3, 7) * s, Vector2(5.8, 7) * s)
+				if i < 2:
+					draw_rect(box, Color(col, 0.35))
+				draw_rect(box, col, false, w * (1.0 if i == 2 else 0.8))
+			draw_line(o + Vector2(16.6, 17.5) * s, o + Vector2(22.4, 17.5) * s, col, w, true)
+		Icon.MEMORY:
+			# Middle square with four small squares at its corners; one is lit.
+			var m := Rect2(o + Vector2(8.5, 8.5) * s, Vector2(7, 7) * s)
+			draw_rect(m, col, false, w)
+			var k := 0
+			for corner: Vector2 in [Vector2(3, 3), Vector2(16, 3), Vector2(3, 16), Vector2(16, 16)]:
+				var r := Rect2(o + corner * s, Vector2(5, 5) * s)
+				if k == 1:
+					draw_rect(r, Color(col, 0.4))
+				draw_rect(r, col, false, w * 0.8)
+				k += 1
 		Icon.SOUND:
 			draw_rect(Rect2(o + Vector2(9, 3) * s, Vector2(6, 11) * s), col, false, w)
 			draw_arc(o + Vector2(12, 11) * s, 6 * s, 0, PI, 24, col, w, true)
