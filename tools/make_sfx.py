@@ -1,4 +1,4 @@
-"""Synthesize the soft sound effects in assets/sfx/ (pop.wav, chime.wav).
+"""Synthesize the soft sound effects in assets/sfx/ (pop.wav, chime.wav, note1–5.wav).
 
 Run: python3 tools/make_sfx.py
 Kept deliberately gentle: low volume, rounded attacks, no harsh frequencies.
@@ -44,7 +44,25 @@ def chime():
     return out
 
 
+# Five soft marimba-like notes for "Atmintis", one per square. A major
+# pentatonic scale (C D E G A), so any sequence of them sounds pleasant.
+NOTES = [523.25, 587.33, 659.25, 783.99, 880.00]
+
+
+def note(f):
+    out = []
+    n = int(RATE * 0.6)
+    for i in range(n):
+        t = i / RATE
+        env = min(1.0, t / 0.006) * math.exp(-t * 7.0)
+        v = math.sin(2 * math.pi * f * t) + 0.18 * math.sin(2 * math.pi * 4 * f * t) * math.exp(-t * 30)
+        out.append(0.32 * env * v)
+    return out
+
+
 if __name__ == "__main__":
+    for k, f in enumerate(NOTES, 1):
+        write(f"note{k}.wav", note(f))
     write("pop.wav", pop())
     write("chime.wav", chime())
     print("wrote", sorted(p.name for p in OUT.glob("*.wav")))
