@@ -31,6 +31,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   - **Kartok** `repeat` – hear "Šuo sako: au au!", say it back; any sound heard (or tapping the mic) counts. Nothing is recorded or stored.
   - **Atspėk** `letters` – word riddle: a picture above each empty box; put each picture's first letter in its box to find the hidden word (STALAS, SALA, LOVA, MORKA, DUONA, TORTAS). Drag a letter or tap letter then box; tap a picture to hear it.
 - `scripts/ui/` – shared controls (RoundButton, PictureCard, Basket, MicButton, WellDone, GameUI helpers)
+- `docs/credits_log.md` – ElevenLabs credits spent on this project (every generation, with running total)
 - `docs/voice_todo.md` – words/phrases that still need a recorded voice clip (generated, see Tools)
 - `scripts/word_bank.gd` – finds a word's picture/voice by ASCII slug (`Surask šunį` → `surask_suni.mp3`)
 - `scripts/sound.gd` (autoload `Sound`) – voice + soft effects, respects parent settings
