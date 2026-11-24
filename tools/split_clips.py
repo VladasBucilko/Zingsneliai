@@ -2,8 +2,8 @@
 """Cut one long recording (several words with pauses between them) into one
 voice clip per word, ready for the app.
 
-Each piece is trimmed, gets a little silence at both ends, is evened out in
-loudness, and is saved as assets/audio/words/<file name>.ogg. Needs ffmpeg.
+Each piece is trimmed, gets a little silence at both ends, is levelled to the
+same loudness as every other clip (tools/level_clips.py), and is saved as assets/audio/words/<file name>.ogg. Needs ffmpeg.
 
 Usage (from the project folder):
   python3 tools/split_clips.py take.mp3 agurkas antis avis
@@ -22,17 +22,16 @@ import argparse
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import audio_status  # noqa: E402  (same folder)
+import level_clips  # noqa: E402
 
 OUT_DIR = ROOT / "assets/audio/words"
-PAD = 0.15          # seconds of silence kept before and after each word
 MIN_WORD = 0.25     # shorter sounds are breaths/clicks, not words
-TARGET_MEAN = -24.0 # dB, about the level of the app's other voice clips
-MAX_PEAK = -3.0     # dB, never louder than this
 
 
 def find_pieces(src: Path, threshold_db: float, min_silence: float):
@@ -54,31 +53,6 @@ def find_pieces(src: Path, threshold_db: float, min_silence: float):
         if off - on >= MIN_WORD:
             pieces.append((on, off))
     return pieces, dur
-
-
-def levels(src: Path, a: float, b: float):
-    """(mean, peak) volume in dB of the word itself."""
-    log = subprocess.run(
-        ["ffmpeg", "-hide_banner", "-nostats", "-i", str(src), "-ss", f"{a:.3f}", "-to", f"{b:.3f}",
-         "-af", "volumedetect", "-f", "null", "-"], capture_output=True, text=True).stderr
-    mean = float(re.search(r"mean_volume: ([-\d.]+) dB", log).group(1))
-    peak = float(re.search(r"max_volume: ([-\d.]+) dB", log).group(1))
-    return mean, peak
-
-
-def export(src: Path, start: float, end: float, dur: float, dest: Path):
-    a = max(0.0, start - PAD)
-    b = min(dur, end + PAD)
-    # One plain gain per clip so every word sits at the same level as the others
-    # (loudness normalisers are unreliable on clips this short).
-    mean, peak = levels(src, start, end)
-    gain = min(TARGET_MEAN - mean, MAX_PEAK - peak)
-    subprocess.run(
-        ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", str(src),
-         "-ss", f"{a:.3f}", "-to", f"{b:.3f}",
-         "-af", f"volume={gain:.2f}dB,afade=t=in:d=0.02,areverse,afade=t=in:d=0.04,areverse",
-         "-ac", "1", "-ar", "44100", "-c:a", "libvorbis", "-q:a", "5", str(dest)],
-        check=True)
 
 
 def existing_clip(slug: str):
@@ -137,7 +111,15 @@ def main(argv):
             continue
         if old and old.suffix != ".ogg":
             old.unlink()  # don't leave two clips for the same word
-        export(args.take, a, b, dur, OUT_DIR / f"{s}.ogg")
+        # Cut the word out (with some room around it), then level it exactly
+        # like tools/level_clips.py does, so all clips end up equally loud.
+        with tempfile.TemporaryDirectory() as tmp:
+            raw = Path(tmp) / "raw.wav"
+            subprocess.run(
+                ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", str(args.take),
+                 "-ss", f"{max(0.0, a - 0.3):.3f}", "-to", f"{min(dur, b + 0.3):.3f}",
+                 "-ac", "1", "-ar", "44100", str(raw)], check=True)
+            level_clips.level(raw, OUT_DIR / f"{s}.ogg", *level_clips.speech_bounds(raw))
         written += 1
     print(f"Wrote {written} clip(s) to {OUT_DIR.relative_to(ROOT)}/. "
           "Open the project in Godot once (it imports new sounds), then run "
