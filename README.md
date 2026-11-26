@@ -32,6 +32,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   - **Sekos** `sequence` – a row of random capital letters stays on screen; press the buttons in the same order (the next letter is outlined; after 3 misses the right button pulses). Levels from `sequence_generator.gd`, endless: 2–4 letters (L1–10), +4 every 10 levels up to 16; the row's letters plus a few extra buttons, full alphabet keyboard from L21. Sounds only, no voice; the last level reached is remembered
   - **Atmintis** `memory` – 5 coloured squares (one in the middle, four at its corners), each with its own soft note. The game lights a sequence (0.5 s per square), the child repeats it; each round adds one random square (repeats allowed). Level n builds up to n+2 squares (`memory_generator.gd`, endless). A wrong press only wiggles the square and the round is shown again. No voice; last level remembered
   - **Atspėk** `letters` – word riddle: a picture above each empty box; put each picture's first letter in its box to find the hidden word (STALAS, SALA, LOVA, MORKA, DUONA, TORTAS). Drag a letter or tap letter then box; tap a picture to hear it.
+- `assets/characters/` – the owl companion: `owl.png` plus poses `owl_wave`, `owl_thumbs_up`, `owl_point`, `owl_cheer`, `owl_think`, `owl_listen`, `owl_read`, `owl_sleepy` (transparent PNGs, cut from `owl_pose_sheet.png`)
 - `scripts/ui/` – shared controls (RoundButton, PictureCard, Basket, MicButton, WellDone, GameUI helpers)
 - `docs/credits_log.md` – ElevenLabs credits spent on this project (every generation, with running total)
 - `docs/voice_todo.md` – words/phrases that still need a recorded voice clip (generated, see Tools)
@@ -44,6 +45,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
 - `python3 tools/audio_status.py` – check every word/phrase the app says against the clips and pictures; rewrites `docs/voice_todo.md` (`--json` for raw status, `--check` exits 1 if anything is missing)
 - `python3 tools/split_clips.py take.mp3 --missing words` – cut a long recording (words with pauses) into one clip per word, levelled and saved as `assets/audio/words/<name>.ogg`; or give the names yourself: `… take.mp3 agurkas antis avis`
 - `python3 tools/level_clips.py` – show every voice clip's loudness; `--apply` levels them all to the same loudness (−20 LUFS) and trims long silences (the splitter does this for new clips automatically)
+- `python3 -I tools/cut_green_sheet.py sheet.png out_dir prefix name1 name2 …` – cut a green-screen sheet into separate transparent PNGs (keeps muted greens; used for the owl poses)
 - `python3 tools/make_sfx.py` – regenerate the soft `pop`/`chime` sounds and the five Atmintis notes (`note1–5`, C D E G A)
 - `python3 tools/square_picture.py in.png out.png` – square-crop a generated picture around its subject (512×512)
 

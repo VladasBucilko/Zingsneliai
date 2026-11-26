@@ -28,9 +28,10 @@ unless the row says otherwise.
 | 2026-11-24 | Voice Changer test: agurkas, antis, avis (own recording) | Multilingual STS v2 | 1 | ? (done in the ElevenLabs app) | 7,972 + ? |
 | 2026-11-24 | Voice Changer: 16 words drugelis … višta (own recording, 30 s) | Multilingual STS v2 | 1 | ? (done in the ElevenLabs app) | 7,972 + ? |
 | 2026-11-26 | Owl character: 3 concepts (no. 2 chosen) | GPT Image 2.5 | 3 | 571 | 8,543 + ? |
+| 2026-11-26 | Owl pose sheet: 8 poses on green, 2K (from the chosen owl) | GPT Image 2.5 | 1 | 518 | 9,061 + ? |
 
 **Totals so far:**
-- Pictures: 41 → 7,805 credits (≈ 91%), incl. 3 owl concepts.
+- Pictures: 42 → 8,323 credits (≈ 92%), incl. 3 owl concepts and the 8-pose sheet.
 - Text-to-speech: 40 takes → 738 credits.
 - Voice Changer: not logged by the flow. Check https://elevenlabs.io/app/usage.
 
