@@ -12,6 +12,7 @@ const GAMES := [
 	["Atspėk", ActivityTile.Icon.LETTERS, Palette.APRICOT, "res://scenes/games/letters.tscn"],
 	["Sekos", ActivityTile.Icon.SEQUENCE, Palette.MINT, "res://scenes/games/sequence.tscn"],
 	["Atmintis", ActivityTile.Icon.MEMORY, Palette.LAVENDER, "res://scenes/games/memory.tscn"],
+	["Raidės", ActivityTile.Icon.PAIRS, Palette.BLUSH, "res://scenes/games/letter_pairs.tscn"],
 ]
 
 const PER_ROW := 4   # up to 8 games; with more: rows of 5 and smaller tiles
@@ -25,6 +26,10 @@ func _ready() -> void:
 	Owl.add_to_corner(self)
 	# Rows of tiles, each row centred (so a short last row stays centred).
 	var per_row := PER_ROW if GAMES.size() <= 8 else 5
+	if GAMES.size() > 8:
+		# Two rows of 5: start higher so the bottom row stays clear of Olis.
+		_rows.alignment = BoxContainer.ALIGNMENT_BEGIN
+		_rows.offset_top -= 40
 	var tile := Vector2(400, 360) if GAMES.size() <= 8 else Vector2(310, 280)
 	var row: HBoxContainer
 	for i in GAMES.size():
