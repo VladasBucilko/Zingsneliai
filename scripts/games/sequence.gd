@@ -23,11 +23,13 @@ var _cells: Array[LetterTile] = []
 var _buttons: Array[LetterTile] = []
 var _dots: HBoxContainer
 var _hint: Tween
+var _owl: Owl
 
 
 func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_title(self, "Spausk raides iš eilės")
+	_owl = Owl.add_to_corner(self)
 	_load_level(start_level if start_level > 0 else _saved_level())
 
 
@@ -120,6 +122,7 @@ func _right(b: LetterTile) -> void:
 		return
 	# Row done.
 	_busy = true
+	_owl.happy()
 	GameUI.fill_dot(_dots, _row_i)
 	Sound.sfx("chime")
 	await get_tree().create_timer(0.8).timeout
@@ -133,6 +136,7 @@ func _right(b: LetterTile) -> void:
 func _wrong(b: LetterTile, want: String) -> void:
 	Sound.sfx("pop", 0.7)
 	_wiggle(b)
+	_owl.oops()
 	_misses += 1
 	if _misses >= HINT_AFTER:
 		for other in _buttons:
@@ -142,6 +146,7 @@ func _wrong(b: LetterTile, want: String) -> void:
 
 
 func _finish() -> void:
+	_owl.cheer()
 	for n in _buttons:
 		n.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	await get_tree().create_timer(0.3).timeout

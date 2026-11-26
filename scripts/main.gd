@@ -1,5 +1,6 @@
 extends Control
-## Home screen: two big sections – "Žaidimukai" (games) and "Mano planas" (planner).
+## Home screen: two big sections – "Žaidimukai" (games) and "Mano planas" (planner),
+## with Olis the owl waving on the left.
 
 const SECTIONS := [
 	# label, icon, accent, scene, spoken
@@ -7,14 +8,26 @@ const SECTIONS := [
 	["Mano planas", ActivityTile.Icon.PLAN, Palette.SAGE, "res://scenes/planner.tscn", "mano planas"],
 ]
 
+const TILE := Vector2(540, 486)   # leaves room for Olis on the left, tiles stay centred
+
 @onready var _grid: GridContainer = $Activities
 
 
 func _ready() -> void:
 	for a in SECTIONS:
-		var t := ActivityTile.new().setup(a[0], a[1], a[2], true, Vector2(600, 540))
+		var t := ActivityTile.new().setup(a[0], a[1], a[2], true, TILE)
 		t.pressed.connect(_open.bind(a[4], a[3]))
 		_grid.add_child(t)
+	# Olis greets the child (waves on arrival; tap him to hear hello).
+	var olis := Owl.new().setup(360)
+	olis.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	olis.offset_left = Owl.SIDE_MARGIN
+	olis.offset_right = Owl.SIDE_MARGIN + olis.size.x
+	olis.offset_top = -Owl.BOTTOM_MARGIN - olis.size.y
+	olis.offset_bottom = -Owl.BOTTOM_MARGIN
+	add_child(olis)
+	olis.wave.call_deferred()
+
 	var lock := RoundButton.new(RoundButton.Kind.LOCK)
 	lock.modulate.a = 0.6
 	lock.disabled = true # parent area comes later

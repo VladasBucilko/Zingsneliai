@@ -15,9 +15,13 @@ var _tex: Texture2D
 @onready var _board: Control = $Board
 
 
+var _owl: Owl
+
+
 func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_speaker(self, func(): Sound.say(_level.get("word", "")))
+	_owl = Owl.add_to_corner(self)
 	_start(start_level)
 
 
@@ -67,6 +71,10 @@ func _waiting_spots(n: int, piece: Vector2) -> Array[Vector2]:
 		var block := Vector2(cols * piece.x + (cols - 1) * GAP, rows * piece.y + (rows - 1) * GAP)
 		var x0 := -MARGIN - block.x if side == 0 else BOARD + MARGIN
 		var y0 := (BOARD - block.y) / 2.0
+		if side == 0:
+			# Keep the left pieces above Olis, who sits in the bottom-left corner.
+			var owl_top := Owl.corner_rect(get_viewport_rect().size).position.y - _board.global_position.y
+			y0 = minf(y0, owl_top - 30.0 - block.y)
 		for j in k:
 			var c := j % cols
 			var r := j / cols
@@ -77,7 +85,9 @@ func _waiting_spots(n: int, piece: Vector2) -> Array[Vector2]:
 func _on_placed(_p: PuzzlePiece) -> void:
 	_placed += 1
 	if _placed < _pieces.size():
+		_owl.happy()
 		return
+	_owl.cheer()
 	await get_tree().create_timer(0.3).timeout
 	create_tween().tween_property($Board/Ghost, "modulate:a", 1.0, 0.4)
 	Sound.sfx("chime")

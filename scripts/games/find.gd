@@ -17,9 +17,13 @@ var _dots: HBoxContainer
 @onready var _row: HBoxContainer = $Choices
 
 
+var _owl: Owl
+
+
 func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_speaker(self, _ask)
+	_owl = Owl.add_to_corner(self)
 	_start(start_level)
 
 
@@ -38,6 +42,7 @@ func _show_round() -> void:
 		c.queue_free()
 	_cards.clear()
 	if _round >= _rounds.size():
+		_owl.cheer()
 		await get_tree().create_timer(0.5).timeout
 		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
 		return
@@ -72,6 +77,7 @@ func _on_pick(c: PictureCard) -> void:
 		c.state = PictureCard.State.MATCHED
 		c.celebrate()
 		Sound.sfx("chime")
+		_owl.happy()
 		GameUI.fill_dot(_dots, _round)
 		await Sound.say_wait(c.word)
 		await get_tree().create_timer(0.5).timeout
@@ -81,6 +87,7 @@ func _on_pick(c: PictureCard) -> void:
 	else:
 		_busy = true
 		c.nudge()
+		_owl.oops()
 		await Sound.say_wait(c.word)
 		await get_tree().create_timer(0.3).timeout
 		_busy = false

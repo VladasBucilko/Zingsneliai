@@ -6,6 +6,7 @@ extends Control
 static var start_level := 1
 
 const SIDE_MARGIN := 40.0
+const LEFT_MARGIN := 290.0   # Olis sits on the left; bubbles rise to his right
 
 var level := 1
 var _data := {}
@@ -20,11 +21,15 @@ var _rng := RandomNumberGenerator.new()
 @onready var _progress: HBoxContainer = $Progress
 
 
+var _owl: Owl
+
+
 func _ready() -> void:
 	var home := RoundButton.new(RoundButton.Kind.HOME)
 	home.position = Vector2(64, 56)
 	home.pressed.connect(_go_home)
 	add_child(home)
+	_owl = Owl.add_to_corner(self)
 	_load_level(start_level)
 
 
@@ -55,8 +60,8 @@ func _process(delta: float) -> void:
 
 func _spawn(spec: Dictionary) -> void:
 	var r := float(spec.radius)
-	var w := size.x - 2.0 * (SIDE_MARGIN + r + float(spec.sway))
-	var x := SIDE_MARGIN + r + float(spec.sway) + w * float(spec.x)
+	var w := size.x - LEFT_MARGIN - SIDE_MARGIN - 2.0 * (r + float(spec.sway))
+	var x := LEFT_MARGIN + r + float(spec.sway) + w * float(spec.x)
 	var b := Bubble.new().setup(spec, x, size.y + r, Settings.reduce_motion)
 	b.popped.connect(_on_popped)
 	b.escaped.connect(_on_escaped)
@@ -103,6 +108,7 @@ func _on_escaped(b: Bubble) -> void:
 
 
 func _finish() -> void:
+	_owl.cheer()
 	_done = true
 	_queue.clear()
 	await get_tree().create_timer(0.6).timeout

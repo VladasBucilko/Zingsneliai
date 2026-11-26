@@ -137,6 +137,8 @@ def collect() -> Collector:
             c.add(text, f"code: {where}", GAMES_UI)
         for text in re.findall(r'\.get\(\s*"instruction",\s*"([^"]+)"\s*\)', src):
             c.add(text, f"code: {where}", PROMPTS)
+        for text in re.findall(r'say_on_tap\s*:?=\s*"([^"]+)"', src):
+            c.add(text, f"code: {where}", GAMES_UI)
     return c
 
 

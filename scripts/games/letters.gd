@@ -29,10 +29,14 @@ var _filled := 0
 var _busy := false
 
 
+var _owl: Owl
+
+
 func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_title(self, "Atspėk žodį")
 	GameUI.add_speaker(self, func(): Sound.say(_level.get("instruction", "atspėk žodį")))
+	_owl = Owl.add_to_corner(self)
 	_start(start_level)
 
 
@@ -158,6 +162,7 @@ func _try(t: LetterTile, s: LetterSlot) -> void:
 		var target := s.position + (s.size - t.size) / 2.0
 		create_tween().tween_property(t, "position", target, 0.18).set_trans(Tween.TRANS_SINE)
 		Sound.sfx("chime")
+		_owl.happy()
 		var word: String = _clues[_slots.find(s)].word
 		if _filled >= _slots.size():
 			_busy = true
@@ -168,6 +173,7 @@ func _try(t: LetterTile, s: LetterSlot) -> void:
 	else:
 		_slide_home(t)
 		_wiggle(t)
+		_owl.oops()
 
 
 func _slide_home(t: LetterTile) -> void:
@@ -183,6 +189,7 @@ func _wiggle(t: LetterTile) -> void:
 
 
 func _reveal() -> void:
+	_owl.cheer()
 	await get_tree().create_timer(0.4).timeout
 	# Unused extra letters fade away; the hidden word's picture appears.
 	for t in _tiles:
