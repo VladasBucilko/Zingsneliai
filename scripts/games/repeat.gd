@@ -31,12 +31,16 @@ var _sink_bus := -1
 @onready var _card_slot: Control = $CardSlot
 
 
+var _owl: Owl
+
+
 func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_speaker(self, _say_current)
 	_mic.pressed.connect(_success)  # tap = "I said it"
 	$Next.pressed.connect(_skip)
 	_setup_mic()
+	_owl = Owl.add_to_corner(self)
 	_start(start_level)
 
 
@@ -88,6 +92,7 @@ func _say_and_listen() -> void:
 	_quiet = 0.0
 	_listening = true
 	_mic.listening = true
+	_owl.listen()
 
 
 func _process(delta: float) -> void:
@@ -114,6 +119,7 @@ func _success() -> void:
 	_listening = false
 	_mic.listening = false
 	_mic.level = 0.0
+	_owl.happy()
 	if _card:
 		_card.state = PictureCard.State.MATCHED
 		_card.celebrate()

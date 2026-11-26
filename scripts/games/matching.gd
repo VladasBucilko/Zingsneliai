@@ -17,6 +17,9 @@ var _matched := 0
 @onready var _bottom_row: HBoxContainer = $Rows/Bottom
 
 
+var _owl: Owl
+
+
 func _ready() -> void:
 	var home := RoundButton.new(RoundButton.Kind.HOME)
 	home.position = Vector2(64, 56)
@@ -30,6 +33,7 @@ func _ready() -> void:
 	speak.offset_bottom = 56 + RoundButton.SIZE
 	speak.pressed.connect(_repeat)
 	add_child(speak)
+	_owl = Owl.add_to_corner(self)
 	_start(start_level)
 
 
@@ -102,12 +106,14 @@ func _on_card(c: PictureCard) -> void:
 		_selected.celebrate()
 		c.celebrate()
 		Sound.sfx("chime")
+		_owl.happy()
 		_selected = null
 		_matched += 1
 		if _matched >= _top.size():
 			_finish()
 	else:
 		c.nudge()
+		_owl.oops()
 
 
 func _same_row(a: PictureCard, b: PictureCard) -> bool:
@@ -122,5 +128,6 @@ func _repeat() -> void:
 
 
 func _finish() -> void:
+	_owl.cheer()
 	await get_tree().create_timer(0.9).timeout
 	GameUI.well_done(self, LEVELS_PATH, int(_level.id), _start)

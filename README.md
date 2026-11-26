@@ -17,7 +17,8 @@ Lithuanian-language learning app for children with special needs (autism, speech
 Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzzer, real photos and human voices.
 
 ## Project layout
-- `scenes/main.tscn` – home screen with two sections + "Išeiti"
+- `scenes/main.tscn` – home screen with two sections + "Išeiti", and Olis waving on the left
+- **Olis** the owl (`scripts/ui/owl.gd`, class `Owl`) – the child's companion, in the bottom-left corner of the games menu and every game (game content stays centred and clear of his corner). Reacts with short poses: thumbs up on a correct answer, thinking after a wrong try (never sad), listening while the game speaks/shows, cheering when a level is done; tap him and he waves and says hello. Also cheers on the "Šaunu!" card
 - **Mano planas** `scenes/planner.tscn` (`scripts/planner/`) – a magnetic board with 6 numbered spaces.
   Drag picture magnets from the tray onto the board to build a plan or story; tap a magnet to hear it;
   drag between spaces to swap, off the board to remove; the speaker reads the plan in order. Saved on
@@ -30,7 +31,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   - **Dėlionė** `puzzle` – drag pieces into the faint picture; they snap in when close (2 → 6 pieces)
   - **Kartok** `repeat` – hear "Šuo sako: au au!", say it back; any sound heard (or tapping the mic) counts. Nothing is recorded or stored.
   - **Sekos** `sequence` – a row of random capital letters stays on screen; press the buttons in the same order (the next letter is outlined; after 3 misses the right button pulses). Levels from `sequence_generator.gd`, endless: 2–4 letters (L1–10), +4 every 10 levels up to 16; the row's letters plus a few extra buttons, full alphabet keyboard from L21. Sounds only, no voice; the last level reached is remembered
-  - **Atmintis** `memory` – 5 coloured squares (one in the middle, four at its corners), each with its own soft note. The game lights a sequence (0.5 s per square), the child repeats it; each round adds one random square (repeats allowed). Level n builds up to n+2 squares (`memory_generator.gd`, endless). A wrong press only wiggles the square and the round is shown again. No voice; last level remembered
+  - **Atmintis** `memory` – 5 coloured squares (one in the middle, four at its corners), each with its own soft note; the game lights a sequence (0.5 s per square), the child repeats it, each round adds one random square. Two modes chosen on opening: **Lygiai** (levels from `memory_generator.gd`, level n builds up to n+2 squares; a wrong press only re-shows the round; last level remembered) and **Išbandymas** (endless random sequence until the first miss, then a calm card: how many were remembered + the best). No voice for the squares
   - **Atspėk** `letters` – word riddle: a picture above each empty box; put each picture's first letter in its box to find the hidden word (STALAS, SALA, LOVA, MORKA, DUONA, TORTAS). Drag a letter or tap letter then box; tap a picture to hear it.
 - `assets/characters/` – the owl companion: `owl.png` plus poses `owl_wave`, `owl_thumbs_up`, `owl_point`, `owl_cheer`, `owl_think`, `owl_listen`, `owl_read`, `owl_sleepy` (transparent PNGs, cut from `owl_pose_sheet.png`)
 - `scripts/ui/` – shared controls (RoundButton, PictureCard, Basket, MicButton, WellDone, GameUI helpers)

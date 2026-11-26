@@ -1,19 +1,20 @@
 class_name WellDone
 extends Control
-## Calm end-of-level card: "Šaunu!" + replay / (next) / home. No scores.
+## Calm end-of-level card: Olis cheering, "Šaunu!" + replay / (next) / home. No scores.
 
 signal replay
 signal next
 signal home
 
 
-static func make(show_next: bool) -> WellDone:
+## note: an optional calm line under "Šaunu!" (e.g. how many squares were remembered).
+static func make(show_next: bool, note := "") -> WellDone:
 	var w := WellDone.new()
-	w._build(show_next)
+	w._build(show_next, note)
 	return w
 
 
-func _build(show_next: bool) -> void:
+func _build(show_next: bool, note := "") -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	var dim := ColorRect.new()
@@ -38,10 +39,19 @@ func _build(show_next: bool) -> void:
 	card.grow_vertical = Control.GROW_DIRECTION_BOTH
 	add_child(card)
 
+	# Olis cheers next to "Šaunu!".
+	var row_all := HBoxContainer.new()
+	row_all.add_theme_constant_override("separation", 56)
+	row_all.alignment = BoxContainer.ALIGNMENT_CENTER
+	card.add_child(row_all)
+	var olis := Owl.new().setup(330, "cheer")
+	olis.say_on_tap = ""
+	row_all.add_child(olis)
+
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 48)
 	col.alignment = BoxContainer.ALIGNMENT_CENTER
-	card.add_child(col)
+	row_all.add_child(col)
 
 	var title := Label.new()
 	title.text = "Šaunu!"
@@ -49,6 +59,13 @@ func _build(show_next: bool) -> void:
 	title.add_theme_font_size_override("font_size", 96)
 	title.add_theme_color_override("font_color", Palette.TEXT)
 	col.add_child(title)
+	if note != "":
+		var sub := Label.new()
+		sub.text = note
+		sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		sub.add_theme_font_size_override("font_size", 44)
+		sub.add_theme_color_override("font_color", Palette.TEXT_MUTED)
+		col.add_child(sub)
 
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER

@@ -22,6 +22,7 @@ const PER_ROW := 4   # up to 8 games; with more: rows of 5 and smaller tiles
 func _ready() -> void:
 	GameUI.add_home(self, GameUI.HOME)
 	GameUI.add_title(self, "Žaidimukai")
+	Owl.add_to_corner(self)
 	# Rows of tiles, each row centred (so a short last row stays centred).
 	var per_row := PER_ROW if GAMES.size() <= 8 else 5
 	var tile := Vector2(400, 360) if GAMES.size() <= 8 else Vector2(310, 280)

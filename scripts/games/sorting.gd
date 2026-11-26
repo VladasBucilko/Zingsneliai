@@ -21,9 +21,13 @@ var _total := 0
 var _busy := false
 
 
+var _owl: Owl
+
+
 func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_speaker(self, _repeat)
+	_owl = Owl.add_to_corner(self)
 	_start(start_level)
 
 
@@ -65,6 +69,7 @@ func _intro() -> void:
 
 func _next_card() -> void:
 	if _queue.is_empty():
+		_owl.cheer()
 		await get_tree().create_timer(0.6).timeout
 		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
 		return
@@ -135,6 +140,7 @@ func _try(b: Basket) -> void:
 		_card = null
 		card.state = PictureCard.State.MATCHED
 		Sound.sfx("chime")
+		_owl.happy()
 		var target := b.global_position + b.size / 2.0 - card.size * 0.2
 		var t := create_tween().set_parallel(true)
 		t.tween_property(card, "global_position", target, 0.35).set_trans(Tween.TRANS_SINE)
@@ -152,6 +158,7 @@ func _try(b: Basket) -> void:
 		_selected = false
 		_slide_home()
 		_card.nudge()
+		_owl.oops()
 
 
 func _slide_home() -> void:
