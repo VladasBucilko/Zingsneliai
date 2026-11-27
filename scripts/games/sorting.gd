@@ -6,7 +6,7 @@ extends Control
 const LEVELS := "res://data/levels/sorting.json"
 const CARD_HOME := Vector2(960 - 150, 170)
 
-static var start_level := 1
+static var start_level := 0   # > 0: open this level directly (tests); 0 = saved level / mode choice
 
 var _level := {}
 var _baskets: Array[Basket] = []
@@ -28,7 +28,14 @@ func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_speaker(self, _repeat)
 	_owl = Owl.add_to_corner(self)
-	_start(start_level)
+	var forced := start_level
+	start_level = 0
+	GameUI.open_game(self, "sorting", forced, _start, _start_endless, _owl)
+
+
+## A new "Begalinis" (unlimited) round.
+func _start_endless() -> void:
+	_start(-1)
 
 
 func _start(id: int) -> void:
@@ -38,17 +45,17 @@ func _start(id: int) -> void:
 	if _card:
 		_card.queue_free()
 		_card = null
-	_level = GameUI.load_level(LEVELS, id)
+	_level = EndlessLevels.sorting() if id < 0 else GameUI.load_level(LEVELS, id)
 	var accents := [Palette.SAGE, Palette.PEACH, Palette.SKY]
 	var row := $Baskets as HBoxContainer
 	_queue.clear()
 	var three: bool = _level.get("baskets", []).size() >= 3
-	row.add_theme_constant_override("separation", 60 if three else 120)
+	row.add_theme_constant_override("separation", 50 if three else 120)
 	var i := 0
 	for bd in _level.get("baskets", []):
 		var b := Basket.new().setup(bd.name, bd.get("icon", bd.words[0]), bd.words, accents[i % accents.size()])
 		if three:
-			b.custom_minimum_size.x = 440
+			b.custom_minimum_size.x = 420   # 3 baskets stay clear of Olis's corner
 		b.pressed.connect(_on_basket_pressed.bind(b))
 		row.add_child(b)
 		_baskets.append(b)
@@ -71,7 +78,7 @@ func _next_card() -> void:
 	if _queue.is_empty():
 		_owl.cheer()
 		await get_tree().create_timer(0.6).timeout
-		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
+		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start, _start_endless)
 		return
 	var word: String = _queue.pop_front()
 	_card = PictureCard.new().setup(word, Palette.BUTTER)

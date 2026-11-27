@@ -5,6 +5,12 @@
     {"id": 3, "word": "traktorius", "cols": 2, "rows": 2},
     {"id": 4, "word": "kiaulė", "cols": 2, "rows": 2},
     {"id": 5, "word": "laivas", "cols": 3, "rows": 2},
-    {"id": 6, "word": "namas", "cols": 3, "rows": 2}
+    {"id": 6, "word": "namas", "cols": 3, "rows": 2},
+    {"id": 7, "word": "tortas", "cols": 3, "rows": 3},
+    {"id": 8, "word": "drugelis", "cols": 3, "rows": 3},
+    {"id": 9, "word": "traktorius", "cols": 4, "rows": 3},
+    {"id": 10, "word": "sala", "cols": 4, "rows": 3},
+    {"id": 11, "word": "namas", "cols": 4, "rows": 4},
+    {"id": 12, "word": "arklys", "cols": 4, "rows": 4}
   ]
 }

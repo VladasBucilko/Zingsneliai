@@ -15,7 +15,7 @@ const SLOT := Vector2(170, 170)
 const TILE := Vector2(130, 130)
 const TAP_DISTANCE := 20.0
 
-static var start_level := 1
+static var start_level := 0   # > 0: open this level directly (tests); 0 = saved level / mode choice
 
 var _level := {}
 var _clues: Array = []
@@ -37,7 +37,14 @@ func _ready() -> void:
 	GameUI.add_title(self, "Atspėk žodį")
 	GameUI.add_speaker(self, func(): Sound.say(_level.get("instruction", "atspėk žodį")))
 	_owl = Owl.add_to_corner(self)
-	_start(start_level)
+	var forced := start_level
+	start_level = 0
+	GameUI.open_game(self, "letters", forced, _start, _start_endless, _owl)
+
+
+## A new "Begalinis" (unlimited) round.
+func _start_endless() -> void:
+	_start(-1)
 
 
 func _start(id: int) -> void:
@@ -48,7 +55,7 @@ func _start(id: int) -> void:
 	_tiles.clear()
 	_filled = 0
 	_selected = null
-	_level = GameUI.load_level(LEVELS, id)
+	_level = EndlessLevels.letters() if id < 0 else GameUI.load_level(LEVELS, id)
 	_clues = _level.get("clues", [])
 	var n := _clues.size()
 	var x0 := (1920.0 - (n * COL_W + (n - 1) * COL_GAP)) / 2.0
@@ -208,4 +215,5 @@ func _reveal() -> void:
 	await get_tree().create_timer(0.4).timeout
 	await Sound.say_wait(answer)
 	await get_tree().create_timer(0.8).timeout
-	GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), func(id: int): _busy = false; _start(id))
+	GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), func(id: int): _busy = false; _start(id),
+		func(): _busy = false; _start_endless())

@@ -9,7 +9,7 @@ const LEVELS := "res://data/levels/repeat.json"
 const HEARD_SECONDS := 0.3   # this much voice = a try
 const REPEAT_AFTER := 8.0    # nothing heard -> say the word again
 
-static var start_level := 1
+static var start_level := 0   # > 0: open this level directly (tests); 0 = saved level / mode choice
 
 var _level := {}
 var _items: Array = []
@@ -41,11 +41,18 @@ func _ready() -> void:
 	$Next.pressed.connect(_skip)
 	_setup_mic()
 	_owl = Owl.add_to_corner(self)
-	_start(start_level)
+	var forced := start_level
+	start_level = 0
+	GameUI.open_game(self, "repeat", forced, _start, _start_endless, _owl)
+
+
+## A new "Begalinis" (unlimited) round.
+func _start_endless() -> void:
+	_start(-1)
 
 
 func _start(id: int) -> void:
-	_level = GameUI.load_level(LEVELS, id)
+	_level = EndlessLevels.repeat() if id < 0 else GameUI.load_level(LEVELS, id)
 	_items = _level.get("items", [])
 	_i = 0
 	if _dots:
@@ -61,7 +68,7 @@ func _present(first := false) -> void:
 		_card.queue_free()
 		_card = null
 	if _i >= _items.size():
-		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
+		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start, _start_endless)
 		return
 	var item: Dictionary = _items[_i]
 	_title.text = item.get("text", item.word)

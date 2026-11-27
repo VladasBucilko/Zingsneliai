@@ -23,7 +23,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   Drag picture magnets from the tray onto the board to build a plan or story; tap a magnet to hear it;
   drag between spaces to swap, off the board to remove; the speaker reads the plan in order. Saved on
   the device (`user://plan.json`). Pictures and words in `data/planner.json`.
-- **Žaidimukai** `scenes/games_menu.tscn` – the mini-games (`scenes/games/`, `scripts/games/`), 6 levels each (Burbulai: generated), levels in `data/levels/*.json`. The "Šaunu!" card has a → button to the next level:
+- **Žaidimukai** `scenes/games_menu.tscn` – the mini-games (`scenes/games/`, `scripts/games/`). Poros, Rūšiuok, Surask, Dėlionė and Kartok have 12 levels, Atspėk 9 (`data/levels/*.json`); the others generate their levels. The "Šaunu!" card has a → button to the next level. Each game remembers the level reached (`user://progress.json`). After the last level → opens **Begalinis** (unlimited): fresh random rounds made from the levels' own words and pictures (`scripts/games/endless_levels.gd`); a finished game then opens with the choice **Lygiai / Begalinis**. Burbulai's Begalinis (after level 10) never stops and gets harder every 6 pops:
   - **Burbulai** `bubble_pop` – tap slowly rising bubbles; levels from `bubble_level_generator.gd` (deterministic; no fail)
   - **Poros** `matching` – tap a picture, then its twin in the other row
   - **Rūšiuok** `sorting` – drag (or tap, then tap a basket) each picture into baskets (Gyvūnai / Maistas / Transportas, Vaisiai / Daržovės; 2–3 baskets)
