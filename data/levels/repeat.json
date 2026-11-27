@@ -5,6 +5,12 @@
     {"id": 3, "items": [{"word": "kiaulė", "say": "kiaulė sako", "text": "Kiaulė sako: kriu kriu!"}, {"word": "arklys", "say": "arklys sako", "text": "Arklys sako: i-ha-ha!"}, {"word": "karvė", "say": "karvė sako", "text": "Karvė sako: mū!"}]},
     {"id": 4, "items": [{"word": "mašina", "say": "mašina sako", "text": "Mašina sako: pyp pyp!"}, {"word": "traktorius", "say": "traktorius sako", "text": "Traktorius sako: tr tr tr!"}, {"word": "lėktuvas", "say": "lėktuvas sako", "text": "Lėktuvas sako: ūūū!"}]},
     {"id": 5, "items": [{"word": "obuolys", "say": "obuolys", "text": "Obuolys"}, {"word": "bananas", "say": "bananas", "text": "Bananas"}, {"word": "duona", "say": "duona", "text": "Duona"}]},
-    {"id": 6, "items": [{"word": "stalas", "say": "stalas", "text": "Stalas"}, {"word": "namas", "say": "namas", "text": "Namas"}, {"word": "sala", "say": "sala", "text": "Sala"}]}
+    {"id": 6, "items": [{"word": "stalas", "say": "stalas", "text": "Stalas"}, {"word": "namas", "say": "namas", "text": "Namas"}, {"word": "sala", "say": "sala", "text": "Sala"}]},
+    {"id": 7, "items": [{"word": "kriaušė", "say": "kriaušė", "text": "Kriaušė"}, {"word": "morka", "say": "morka", "text": "Morka"}, {"word": "agurkas", "say": "agurkas", "text": "Agurkas"}, {"word": "pomidoras", "say": "pomidoras", "text": "Pomidoras"}]},
+    {"id": 8, "items": [{"word": "triušis", "say": "triušis", "text": "Triušis"}, {"word": "drugelis", "say": "drugelis", "text": "Drugelis"}, {"word": "arklys", "say": "arklys", "text": "Arklys"}, {"word": "višta", "say": "višta", "text": "Višta"}]},
+    {"id": 9, "items": [{"word": "traktorius", "say": "traktorius", "text": "Traktorius"}, {"word": "lėktuvas", "say": "lėktuvas", "text": "Lėktuvas"}, {"word": "mašina", "say": "mašina", "text": "Mašina"}, {"word": "laivas", "say": "laivas", "text": "Laivas"}]},
+    {"id": 10, "items": [{"word": "namas", "say": "namas", "text": "Namas"}, {"word": "lova", "say": "lova", "text": "Lova"}, {"word": "stalas", "say": "stalas", "text": "Stalas"}, {"word": "sūpynės", "say": "sūpynės", "text": "Sūpynės"}]},
+    {"id": 11, "items": [{"word": "obuolys", "say": "obuolys", "text": "Obuolys"}, {"word": "bananas", "say": "bananas", "text": "Bananas"}, {"word": "avilys", "say": "avilys", "text": "Avilys"}, {"word": "uogos", "say": "uogos", "text": "Uogos"}]},
+    {"id": 12, "items": [{"word": "plauti rankas", "say": "plauti rankas", "text": "Plauti rankas"}, {"word": "valytis dantis", "say": "valytis dantis", "text": "Valytis dantis"}, {"word": "į lauką", "say": "į lauką", "text": "Į lauką"}, {"word": "rengtis", "say": "rengtis", "text": "Rengtis"}]}
   ]
 }

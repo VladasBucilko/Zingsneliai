@@ -8,7 +8,7 @@ const SECTIONS := [
 	["Mano planas", ActivityTile.Icon.PLAN, Palette.SAGE, "res://scenes/planner.tscn", "mano planas"],
 ]
 
-const TILE := Vector2(540, 486)   # leaves room for Olis on the left, tiles stay centred
+const TILE := Vector2(500, 450)   # leaves room for Olis on the left, tiles stay centred
 
 @onready var _grid: GridContainer = $Activities
 
@@ -19,7 +19,7 @@ func _ready() -> void:
 		t.pressed.connect(_open.bind(a[4], a[3]))
 		_grid.add_child(t)
 	# Olis greets the child (waves on arrival; tap him to hear hello).
-	var olis := Owl.new().setup(360)
+	var olis := Owl.new().setup(432)
 	olis.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
 	olis.offset_left = Owl.SIDE_MARGIN
 	olis.offset_right = Owl.SIDE_MARGIN + olis.size.x

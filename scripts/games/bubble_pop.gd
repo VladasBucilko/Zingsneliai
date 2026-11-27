@@ -1,9 +1,14 @@
 extends Control
 ## "Burbulai" — tap the slowly rising bubbles. No timer, no score, no failing.
 ## Levels come from BubbleLevelGenerator; bubbles that float away come back.
+## "Begalinis" (unlocked after level 10): bubbles never stop, and it gets a
+## little harder every 6 pops — faster than through the levels. A quiet
+## counter shows how many were popped.
 
-## Which level the scene opens with. Set before changing to this scene.
-static var start_level := 1
+## > 0: open this level directly (tests); 0 = saved level / mode choice.
+static var start_level := 0
+
+const ENDLESS_STEP := 6      # pops per difficulty step in Begalinis
 
 const SIDE_MARGIN := 40.0
 const LEFT_MARGIN := 290.0   # Olis sits on the left; bubbles rise to his right
@@ -16,6 +21,9 @@ var _popped := 0
 var _wait := 0.0
 var _done := false
 var _rng := RandomNumberGenerator.new()
+var _endless := false
+var _total := 0
+var _counter: Label
 
 @onready var _field: Node2D = $Field
 @onready var _progress: HBoxContainer = $Progress
@@ -30,12 +38,17 @@ func _ready() -> void:
 	home.pressed.connect(_go_home)
 	add_child(home)
 	_owl = Owl.add_to_corner(self)
-	_load_level(start_level)
+	var forced := start_level
+	start_level = 0
+	GameUI.open_game(self, "bubble_pop", forced, _load_level, _start_endless, _owl)
 
 
 func _load_level(n: int) -> void:
 	level = n
-	start_level = n
+	_endless = false
+	_progress.visible = true
+	if _counter:
+		_counter.text = ""
 	for b in _active:
 		b.queue_free()
 	_active.clear()
@@ -48,7 +61,27 @@ func _load_level(n: int) -> void:
 	_build_progress()
 
 
+func _start_endless() -> void:
+	_load_level(1)
+	_rng.randomize()
+	_endless = true
+	_total = 0
+	_progress.visible = false
+	if _counter == null:
+		_counter = GameUI.add_title(self, "")
+	_counter.text = "0"
+	_refill()
+
+
+## Begalinis: a fresh batch of bubbles at the current difficulty.
+func _refill() -> void:
+	_data = BubbleLevelGenerator.generate(level, _rng.randi(), Settings.difficulty)
+	_queue = _data.bubbles.duplicate(true)
+
+
 func _process(delta: float) -> void:
+	if _endless and _queue.size() < 2:
+		_queue.append_array(BubbleLevelGenerator.generate(level, _rng.randi(), Settings.difficulty).bubbles)
 	if _done or _queue.is_empty():
 		return
 	_wait -= delta
@@ -89,6 +122,15 @@ func _on_popped(b: Bubble) -> void:
 	_active.erase(b)
 	_popped += 1
 	Sound.sfx("pop", _rng.randf_range(0.9, 1.12))
+	if _endless:
+		_total += 1
+		_counter.text = str(_total)
+		if _total % ENDLESS_STEP == 0:
+			level += 1          # a little harder; the generator tops out at its level 10
+			_refill()
+			if _total % (ENDLESS_STEP * 4) == 0:
+				_owl.happy()
+		return
 	_update_progress()
 	if _popped >= int(_data.goal):
 		_finish()
@@ -110,6 +152,9 @@ func _on_escaped(b: Bubble) -> void:
 func _finish() -> void:
 	_owl.cheer()
 	_done = true
+	GameUI.set_progress("bubble_pop", {"level": level + 1})
+	if level >= BubbleLevelGenerator.MAX_CURVE_LEVEL:
+		GameUI.set_progress("bubble_pop", {"done": true})
 	_queue.clear()
 	await get_tree().create_timer(0.6).timeout
 	var w := WellDone.make(true)

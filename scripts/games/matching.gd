@@ -5,7 +5,7 @@ extends Control
 
 const LEVELS_PATH := "res://data/levels/matching.json"
 
-static var start_level := 1
+static var start_level := 0   # > 0: open this level directly (tests); 0 = saved level / mode choice
 
 var _level := {}
 var _top: Array[PictureCard] = []
@@ -18,6 +18,7 @@ var _matched := 0
 
 
 var _owl: Owl
+var _card_size := PictureCard.CARD_SIZE
 
 
 func _ready() -> void:
@@ -34,7 +35,9 @@ func _ready() -> void:
 	speak.pressed.connect(_repeat)
 	add_child(speak)
 	_owl = Owl.add_to_corner(self)
-	_start(start_level)
+	var forced := start_level
+	start_level = 0
+	GameUI.open_game(self, "matching", forced, _start, _start_endless, _owl)
 
 
 static func load_level(id: int) -> Dictionary:
@@ -46,8 +49,13 @@ static func load_level(id: int) -> Dictionary:
 	return levels[0] if not levels.is_empty() else {"id": 1, "words": ["šuo", "katė", "karvė"], "show_word": true}
 
 
+## A new "Begalinis" (unlimited) round.
+func _start_endless() -> void:
+	_start(-1)
+
+
 func _start(id: int) -> void:
-	_level = load_level(id)
+	_level = EndlessLevels.matching() if id < 0 else load_level(id)
 	for c in _top_row.get_children() + _bottom_row.get_children():
 		c.queue_free()
 	_top.clear()
@@ -56,6 +64,14 @@ func _start(id: int) -> void:
 	_matched = 0
 	var words: Array = _level.words
 	var show_word: bool = _level.get("show_word", true)
+	# 5–6 pairs: smaller cards, rows start higher so Olis's corner stays clear.
+	var many := words.size() > 4
+	_card_size = Vector2(220, 262) if many else PictureCard.CARD_SIZE
+	var gap := 32 if many else 64
+	_top_row.add_theme_constant_override("separation", gap)
+	_bottom_row.add_theme_constant_override("separation", gap)
+	($Rows as VBoxContainer).alignment = BoxContainer.ALIGNMENT_BEGIN if many else BoxContainer.ALIGNMENT_CENTER
+	$Rows.add_theme_constant_override("separation", 36 if many else 64)
 	var shuffled := words.duplicate()
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
@@ -84,6 +100,8 @@ func _shuffle(a: Array, rng: RandomNumberGenerator) -> void:
 
 func _add_card(row: HBoxContainer, word: String, color_idx: int, show_word: bool) -> PictureCard:
 	var c := PictureCard.new().setup(word, Palette.ACCENTS[(color_idx + 4) % Palette.ACCENTS.size()], show_word)
+	c.custom_minimum_size = _card_size
+	c.pivot_offset = _card_size / 2.0
 	c.pressed.connect(_on_card.bind(c))
 	row.add_child(c)
 	return c
@@ -130,4 +148,4 @@ func _repeat() -> void:
 func _finish() -> void:
 	_owl.cheer()
 	await get_tree().create_timer(0.9).timeout
-	GameUI.well_done(self, LEVELS_PATH, int(_level.id), _start)
+	GameUI.well_done(self, LEVELS_PATH, int(_level.id), _start, _start_endless)

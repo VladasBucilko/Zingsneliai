@@ -5,6 +5,12 @@
     {"id": 3, "theme": "gyvunai", "words": ["kiaulė", "višta", "šuo", "katė"], "show_word": true},
     {"id": 4, "theme": "maistas", "words": ["obuolys", "bananas", "duona", "pienas"], "show_word": true},
     {"id": 5, "theme": "transportas", "words": ["traktorius", "laivas", "mašina", "lėktuvas"], "show_word": true},
-    {"id": 6, "theme": "mix", "words": ["triušis", "kriaušė", "drugelis", "namas"], "show_word": false}
+    {"id": 6, "theme": "mix", "words": ["triušis", "kriaušė", "drugelis", "namas"], "show_word": false},
+    {"id": 7, "theme": "gyvunai", "words": ["arklys", "karvė", "avis", "kiaulė", "antis"], "show_word": true},
+    {"id": 8, "theme": "vaisiai", "words": ["obuolys", "kriaušė", "bananas", "uogos", "pomidoras"], "show_word": false},
+    {"id": 9, "theme": "transportas", "words": ["traktorius", "laivas", "mašina", "lėktuvas", "namas", "sūpynės"], "show_word": true},
+    {"id": 10, "theme": "gyvunai", "words": ["šuo", "katė", "triušis", "višta", "antis", "drugelis"], "show_word": false},
+    {"id": 11, "theme": "maistas", "words": ["morka", "agurkas", "pomidoras", "kriaušė", "obuolys", "uogos"], "show_word": false},
+    {"id": 12, "theme": "daiktai", "words": ["stalas", "lova", "namas", "avilys", "sala", "rožė"], "show_word": false}
   ]
 }

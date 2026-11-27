@@ -4,7 +4,7 @@ extends Control
 
 const LEVELS := "res://data/levels/find.json"
 
-static var start_level := 1
+static var start_level := 0   # > 0: open this level directly (tests); 0 = saved level / mode choice
 
 var _level := {}
 var _round := 0
@@ -24,11 +24,18 @@ func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_speaker(self, _ask)
 	_owl = Owl.add_to_corner(self)
-	_start(start_level)
+	var forced := start_level
+	start_level = 0
+	GameUI.open_game(self, "find", forced, _start, _start_endless, _owl)
+
+
+## A new "Begalinis" (unlimited) round.
+func _start_endless() -> void:
+	_start(-1)
 
 
 func _start(id: int) -> void:
-	_level = GameUI.load_level(LEVELS, id)
+	_level = EndlessLevels.find() if id < 0 else GameUI.load_level(LEVELS, id)
 	_rounds = _level.get("rounds", [])
 	_round = 0
 	if _dots:
@@ -44,16 +51,18 @@ func _show_round() -> void:
 	if _round >= _rounds.size():
 		_owl.cheer()
 		await get_tree().create_timer(0.5).timeout
-		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
+		GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start, _start_endless)
 		return
 	var r: Dictionary = _rounds[_round]
 	_prompt.text = r.prompt
-	_row.add_theme_constant_override("separation", 120 if r.choices.size() <= 3 else 64)
+	var n: int = r.choices.size()
+	_row.offset_bottom = 270.0 if n <= 4 else 190.0   # 5–6 cards: shorter, clear of Olis
+	_row.add_theme_constant_override("separation", 120 if n <= 3 else (64 if n == 4 else 40))
 	var i := 0
 	for word in r.choices:
 		# Pictures only: the child finds it by listening, not by reading.
 		var c := PictureCard.new().setup(word, Palette.ACCENTS[i % Palette.ACCENTS.size()], false)
-		var side := 360.0 if r.choices.size() <= 3 else 300.0
+		var side: float = [360.0, 360.0, 360.0, 360.0, 300.0, 270.0, 240.0][mini(n, 6)]
 		c.custom_minimum_size = Vector2(side, side)
 		c.pivot_offset = Vector2(side, side) / 2.0
 		c.pressed.connect(_on_pick.bind(c))

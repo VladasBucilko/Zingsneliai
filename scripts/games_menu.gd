@@ -30,7 +30,7 @@ func _ready() -> void:
 		# Two rows of 5: start higher so the bottom row stays clear of Olis.
 		_rows.alignment = BoxContainer.ALIGNMENT_BEGIN
 		_rows.offset_top -= 40
-	var tile := Vector2(400, 360) if GAMES.size() <= 8 else Vector2(310, 280)
+	var tile := Vector2(400, 360) if GAMES.size() <= 8 else Vector2(310, 266)
 	var row: HBoxContainer
 	for i in GAMES.size():
 		if i % per_row == 0:

@@ -26,7 +26,7 @@ const BOTTOM_MARGIN := 20.0
 
 ## The area Olis takes in the bottom-left corner at the in-game size; game
 ## layouts keep their content out of this rectangle.
-static func corner_rect(screen_size: Vector2, height := 230.0) -> Rect2:
+static func corner_rect(screen_size: Vector2, height := 276.0) -> Rect2:
 	var w := height * 0.86
 	return Rect2(Vector2(SIDE_MARGIN, screen_size.y - BOTTOM_MARGIN - height), Vector2(w, height))
 
@@ -39,7 +39,7 @@ var _sprite: TextureRect
 
 
 ## height = how tall Olis is drawn. Put him in place with position/anchors.
-func setup(height := 230.0, start_pose := "idle") -> Owl:
+func setup(height := 276.0, start_pose := "idle") -> Owl:
 	custom_minimum_size = Vector2(height * 0.86, height)
 	size = custom_minimum_size
 	pivot_offset = Vector2(size.x / 2.0, size.y)
@@ -59,7 +59,7 @@ func setup(height := 230.0, start_pose := "idle") -> Owl:
 
 
 ## Bottom-left corner of a game screen, at the standard in-game size.
-static func add_to_corner(screen: Control, height := 230.0) -> Owl:
+static func add_to_corner(screen: Control, height := 276.0) -> Owl:
 	var o := Owl.new().setup(height)
 	o.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
 	o.offset_left = SIDE_MARGIN

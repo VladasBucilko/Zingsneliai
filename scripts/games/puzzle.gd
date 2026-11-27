@@ -5,7 +5,7 @@ extends Control
 const LEVELS := "res://data/levels/puzzle.json"
 const BOARD := 560.0
 
-static var start_level := 1
+static var start_level := 0   # > 0: open this level directly (tests); 0 = saved level / mode choice
 
 var _level := {}
 var _pieces: Array[PuzzlePiece] = []
@@ -22,11 +22,18 @@ func _ready() -> void:
 	GameUI.add_home(self)
 	GameUI.add_speaker(self, func(): Sound.say(_level.get("word", "")))
 	_owl = Owl.add_to_corner(self)
-	_start(start_level)
+	var forced := start_level
+	start_level = 0
+	GameUI.open_game(self, "puzzle", forced, _start, _start_endless, _owl)
+
+
+## A new "Begalinis" (unlimited) round.
+func _start_endless() -> void:
+	_start(-1)
 
 
 func _start(id: int) -> void:
-	_level = GameUI.load_level(LEVELS, id)
+	_level = EndlessLevels.puzzle() if id < 0 else GameUI.load_level(LEVELS, id)
 	for p in _pieces:
 		p.queue_free()
 	_pieces.clear()
@@ -93,4 +100,4 @@ func _on_placed(_p: PuzzlePiece) -> void:
 	Sound.sfx("chime")
 	await Sound.say_wait(_level.get("word", ""))
 	await get_tree().create_timer(0.4).timeout
-	GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start)
+	GameUI.well_done(self, LEVELS, int(_level.get("id", 1)), _start, _start_endless)
