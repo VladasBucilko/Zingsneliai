@@ -8,13 +8,17 @@ signal home
 
 
 ## note: an optional calm line under "Šaunu!" (e.g. how many squares were remembered).
-static func make(show_next: bool, note := "") -> WellDone:
+## title / pose / spoken: for the calm "try again" card in Spalvos
+## ("Beveik!", Olis thinking, Sound.say("beveik")). Normally Sound.say("šaunu").
+static func make(show_next: bool, note := "", title_text := "Šaunu!", pose := "cheer",
+		spoken := "šaunu") -> WellDone:
 	var w := WellDone.new()
-	w._build(show_next, note)
+	w._build(show_next, note, title_text, pose, spoken)
 	return w
 
 
-func _build(show_next: bool, note := "") -> void:
+func _build(show_next: bool, note := "", title_text := "Šaunu!", pose := "cheer",
+		spoken := "šaunu") -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	var dim := ColorRect.new()
@@ -44,7 +48,7 @@ func _build(show_next: bool, note := "") -> void:
 	row_all.add_theme_constant_override("separation", 56)
 	row_all.alignment = BoxContainer.ALIGNMENT_CENTER
 	card.add_child(row_all)
-	var olis := Owl.new().setup(330, "cheer")
+	var olis := Owl.new().setup(330, pose)
 	olis.say_on_tap = ""
 	row_all.add_child(olis)
 
@@ -54,7 +58,7 @@ func _build(show_next: bool, note := "") -> void:
 	row_all.add_child(col)
 
 	var title := Label.new()
-	title.text = "Šaunu!"
+	title.text = title_text
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 96)
 	title.add_theme_color_override("font_color", Palette.TEXT)
@@ -85,4 +89,4 @@ func _build(show_next: bool, note := "") -> void:
 	modulate.a = 0.0
 	create_tween().tween_property(self, "modulate:a", 1.0, 0.5)
 	Sound.sfx("chime")
-	Sound.say("šaunu")
+	Sound.say(spoken)

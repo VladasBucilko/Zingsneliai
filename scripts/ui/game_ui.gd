@@ -167,13 +167,27 @@ static func open_game(screen: Control, game: String, forced: int, on_level: Call
 ## Speaks the chosen mode: Sound.say("lygiai") / Sound.say("begalinis").
 static func mode_picker(screen: Control, levels_note: String, on_levels: Callable,
 		on_endless: Callable, owl: Owl = null) -> Control:
+	return picker(screen, [
+		{"title": "Lygiai", "accent": Palette.LAVENDER, "note": levels_note, "start": on_levels, "say": "lygiai"},
+		{"title": "Begalinis", "accent": Palette.BUTTER, "note": "be pabaigos", "start": on_endless, "say": "begalinis"},
+	], owl)
+
+
+## Big mode tiles in a row on a soft cover. Each mode: {title, accent, note,
+## start: Callable, say, open (default true), icon (ActivityTile.Icon)}.
+## A closed mode is faded and can't be tapped. Removes itself when one is chosen.
+static func picker(screen: Control, modes: Array, owl: Owl = null) -> Control:
+	var three := modes.size() > 2
 	var row := HBoxContainer.new()
 	row.name = "ModePicker"
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 96)
+	row.add_theme_constant_override("separation", 64 if three else 96)
 	row.set_anchors_preset(Control.PRESET_CENTER)
 	row.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	row.grow_vertical = Control.GROW_DIRECTION_BOTH
+	if three:
+		row.offset_left = 120.0       # nudged right, clear of Olis
+		row.offset_right = 120.0
 	# A soft cover so the (empty) game screen behind doesn't show through.
 	var cover := ColorRect.new()
 	cover.color = Palette.CANVAS
@@ -181,22 +195,23 @@ static func mode_picker(screen: Control, levels_note: String, on_levels: Callabl
 	cover.mouse_filter = Control.MOUSE_FILTER_STOP
 	screen.add_child(cover)
 	screen.add_child(row)
-	for m in [["Lygiai", Palette.LAVENDER, levels_note, on_levels, "lygiai"],
-			["Begalinis", Palette.BUTTER, "be pabaigos", on_endless, "begalinis"]]:
+	for m in modes:
 		var col := VBoxContainer.new()
 		col.add_theme_constant_override("separation", 18)
-		var t := ActivityTile.new().setup(m[0], ActivityTile.Icon.GAMES, m[1], true, Vector2(460, 414))
-		var start: Callable = m[3]
-		var spoken: String = m[4]
+		var tile_size := Vector2(400, 360) if three else Vector2(460, 414)
+		var t := ActivityTile.new().setup(m.title, m.get("icon", ActivityTile.Icon.GAMES), m.accent,
+			m.get("open", true), tile_size)
+		var start: Callable = m.start
+		var spoken: String = m.get("say", "")
 		t.pressed.connect(func():
-			Sound.say(spoken)
+			if spoken != "": Sound.say(spoken)
 			row.queue_free()
 			cover.queue_free()
 			if owl: owl.set_pose("idle")
 			start.call())
 		col.add_child(t)
 		var note := Label.new()
-		note.text = m[2]
+		note.text = m.get("note", "")
 		note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		note.add_theme_font_size_override("font_size", 34)
 		note.add_theme_color_override("font_color", Palette.TEXT_MUTED)
