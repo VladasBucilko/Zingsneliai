@@ -40,7 +40,29 @@ func _ready() -> void:
 	_owl = Owl.add_to_corner(self)
 	var forced := start_level
 	start_level = 0
-	GameUI.open_game(self, "bubble_pop", forced, _load_level, _start_endless, _owl)
+	if forced > 0:
+		_load_level(forced)
+	else:
+		_pick_mode()
+
+
+## Lygiai (classic levels), Begalinis (opens after level 10) and Spalvos
+## (pop only the colour in the square, on the forest path map).
+## Speaks: Sound.say("spalvos")
+func _pick_mode() -> void:
+	var p := GameUI.progress("bubble_pop")
+	var done := bool(p.get("done", false))
+	var saved := GameUI.saved_level("bubble_pop")
+	GameUI.picker(self, [
+		{"title": "Lygiai", "accent": Palette.LAVENDER, "note": "lygis %d" % saved,
+			"start": func(): _load_level(saved), "say": "lygiai", "icon": ActivityTile.Icon.BUBBLES},
+		{"title": "Begalinis", "accent": Palette.BUTTER,
+			"note": "be pabaigos" if done else "po 10 lygio", "open": done,
+			"start": _start_endless, "say": "begalinis", "icon": ActivityTile.Icon.BUBBLES},
+		{"title": "Spalvos", "accent": Palette.MINT, "note": "miško takas",
+			"start": func(): get_tree().change_scene_to_file(BubbleColors.MAP),
+			"say": "spalvos", "icon": ActivityTile.Icon.BUBBLES},
+	], _owl)
 
 
 func _load_level(n: int) -> void:

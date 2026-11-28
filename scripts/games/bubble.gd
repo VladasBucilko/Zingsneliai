@@ -14,19 +14,24 @@ var sway := 20.0
 var sway_hz := 0.2
 var phase := 0.0
 var spec := {}
+var whiten := 0.85          # how pale the centre gets (colour mode keeps more colour)
+var color_id := 0
 
 var _base_x := 0.0
 var _t := 0.0
 var _pop_t := -1.0
 var _spawn_t := 0.0
 var _reduce_motion := false
+var _shake := 0.0
 
 
 func setup(spec_: Dictionary, x_px: float, y_px: float, reduce_motion: bool) -> Bubble:
 	spec = spec_
 	radius = spec.radius
 	speed = spec.speed * (0.7 if reduce_motion else 1.0)
-	tint = Palette.ACCENTS[int(spec.color) % Palette.ACCENTS.size()]
+	color_id = int(spec.color)
+	tint = spec.get("tint", Palette.ACCENTS[color_id % Palette.ACCENTS.size()])
+	whiten = spec.get("whiten", 0.85)
 	sway = 0.0 if reduce_motion else spec.sway
 	sway_hz = spec.sway_hz
 	phase = spec.phase
@@ -43,6 +48,12 @@ func is_popping() -> bool:
 ## Generous hit area: small fingers miss a little.
 func hit(p: Vector2) -> bool:
 	return not is_popping() and p.distance_to(position) <= radius * 1.15
+
+
+## A small side-to-side shake: "not this one".
+func nudge() -> void:
+	if not _reduce_motion:
+		_shake = 1.0
 
 
 func pop() -> void:
@@ -63,6 +74,9 @@ func _process(delta: float) -> void:
 	_spawn_t = minf(_spawn_t + delta * 3.0, 1.0)
 	position.y -= speed * delta
 	position.x = _base_x + sin(_t * TAU * sway_hz + phase) * sway
+	if _shake > 0.0:
+		_shake = maxf(_shake - delta * 3.0, 0.0)
+		position.x += sin(_shake * 40.0) * 14.0 * _shake
 	if position.y < -radius * 1.2:
 		escaped.emit(self)
 		queue_free()
@@ -78,7 +92,7 @@ func _draw() -> void:
 	var steps := 14
 	for i in steps:
 		var k := float(i) / float(steps - 1) # 0 = outer, 1 = inner
-		var col := tint.lerp(Color.WHITE, k * 0.85)
+		var col := tint.lerp(Color.WHITE, k * whiten)
 		col.a = lerpf(0.85, 0.95, k)
 		draw_circle(Vector2(-r * 0.12, -r * 0.12) * k, r * (1.0 - k * 0.85), col)
 	draw_arc(Vector2.ZERO, r - 2.0, 0, TAU, 72, Color(1, 1, 1, 0.9), 4.0, true)
