@@ -1,12 +1,13 @@
 class_name BubbleColors
 extends Control
 ## "Spalvos" — Burbulai colour mode. The square at the top shows a colour:
-## pop only bubbles of that colour. When none of that colour is left on the
-## screen, the square changes to a colour that is there. Three hearts: a heart
-## goes only when a bubble of the square's colour floats away. Tapping another
-## colour just makes that bubble wiggle. Out of hearts → a calm "Beveik!" card.
-## Levels 1–19 are stops on the forest path (BubbleMap); 20 = Olis's home,
-## unlimited and slowly getting harder.
+## pop a bubble of that colour and the square changes at once to a new colour
+## (it can be the same one again), picked from the bubbles on screen. Three
+## hearts: a heart goes only when a bubble of the square's colour floats away.
+## Tapping another colour just makes that bubble wiggle. Out of hearts → a calm
+## "Beveik!" card. Finishing a level goes back to the map, where Olis walks to
+## the next stop and a Play card opens. Levels 1–19 are stops on the forest
+## path (BubbleMap); 20 = Olis's home, unlimited and slowly getting harder.
 
 const MAP := "res://scenes/games/bubble_map.tscn"
 const SCENE := "res://scenes/games/bubble_colors.tscn"
@@ -16,10 +17,12 @@ const HOME_STEP := 8                  # pops per difficulty step at Olis's home
 const SIDE_MARGIN := 40.0
 const LEFT_MARGIN := 290.0            # Olis sits on the left
 const TOP_ZONE := 230.0               # square + hearts live above this
-const SWITCH_DELAY := 0.5             # seconds without the colour before the square changes
+const STUCK_TIME := 2.5               # colour not on screen this long → square changes anyway
 
 ## Level to open (set by the map before changing scene).
 static var start_level := 1
+## Set when a level was just finished: the map shows Olis walking on from it.
+static var walk_from := 0
 
 var level := 1
 var _p := {}
@@ -120,30 +123,40 @@ func _process(delta: float) -> void:
 	if _wait <= 0.0 and _active.size() < int(_p.max_on_screen):
 		_spawn()
 		_wait = float(_p.gap) * _rng.randf_range(0.8, 1.2)
-	# Square changes when its colour is gone from the screen (but others are there).
-	var has_target := false
-	var present := {}
-	for b in _active:
-		if b.is_popping():
-			continue
-		present[b.color_id] = true
-		if b.color_id == _target:
-			has_target = true
-	if has_target or present.is_empty():
+	# Safety net: if the square's colour is nowhere on screen for a while,
+	# change it to one that is (normally it changes on every pop).
+	if _present().has(_target) or _active.is_empty():
 		_missing_t = 0.0
 	else:
 		_missing_t += delta
-		if _missing_t >= SWITCH_DELAY:
-			_missing_t = 0.0
-			var options: Array = present.keys()
-			_set_target(options[_rng.randi_range(0, options.size() - 1)], true)
+		if _missing_t >= STUCK_TIME:
+			_new_target()
+
+
+## Colours of the bubbles on screen (not popping), one entry per bubble.
+func _present() -> Array:
+	var out: Array = []
+	for b in _active:
+		if not b.is_popping():
+			out.append(b.color_id)
+	return out
+
+
+## A new colour for the square straight away: one of the bubbles on screen
+## (the same colour may come again); a random level colour if none are there.
+func _new_target() -> void:
+	_missing_t = 0.0
+	var options := _present()
+	var c := _rng.randi_range(0, int(_p.colors) - 1)
+	if not options.is_empty():
+		c = options[_rng.randi_range(0, options.size() - 1)]
+	_set_target(c, true)
 
 
 func _set_target(c: int, speak: bool) -> void:
-	var changed := c != _target
 	_target = c
 	_square.show_color(ColorBubbleLevels.COLORS[c])
-	if speak and changed:
+	if speak:
 		Sound.say(ColorBubbleLevels.NAMES[c])
 
 
@@ -213,6 +226,7 @@ func _on_popped(b: Bubble) -> void:
 	_active.erase(b)
 	_popped += 1
 	Sound.sfx("pop", _rng.randf_range(0.9, 1.12))
+	_new_target()
 	if _home:
 		_counter.text = str(_popped)
 		if _popped % HOME_STEP == 0:
@@ -247,14 +261,14 @@ func _stop_field() -> void:
 func _finish() -> void:
 	_stop_field()
 	_owl.cheer()
+	Sound.sfx("chime")
+	Sound.say("šaunu")
 	if level + 1 > reached():
 		GameUI.set_progress(GAME, {"level": level + 1})
-	await get_tree().create_timer(0.6).timeout
-	var w := WellDone.make(true)
-	w.replay.connect(func(): w.queue_free(); _owl.set_pose("idle"); _start(level))
-	w.next.connect(func(): w.queue_free(); _owl.set_pose("idle"); _start(level + 1))
-	w.home.connect(_go_map)
-	add_child(w)
+	await get_tree().create_timer(1.2).timeout
+	# On the map Olis walks from this stop to the next one, then "Play" opens.
+	walk_from = level
+	_go_map()
 
 
 func _out_of_lives() -> void:

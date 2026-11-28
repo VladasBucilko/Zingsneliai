@@ -2,7 +2,7 @@ class_name RoundButton
 extends Button
 ## 112px round control with a drawn icon (matches Figma "IconButton").
 
-enum Kind { HOME, SPEAKER, LOCK, REPLAY, NEXT, QUIT, CLEAR }
+enum Kind { HOME, SPEAKER, LOCK, REPLAY, NEXT, QUIT, CLEAR, PLAY }
 
 @export var kind: Kind = Kind.HOME
 
@@ -55,6 +55,9 @@ func _draw() -> void:
 			# Soft "take everything off the board": a sweeping arc with an arrow back
 			draw_line(o + Vector2(7, 7) * s, o + Vector2(17, 17) * s, col, w, true)
 			draw_line(o + Vector2(17, 7) * s, o + Vector2(7, 17) * s, col, w, true)
+		Kind.PLAY:
+			var tri := _xf(PackedVector2Array([Vector2(8, 5), Vector2(19, 12), Vector2(8, 19)]), o, s)
+			draw_colored_polygon(tri, col)
 		Kind.NEXT:
 			draw_polyline(_xf(PackedVector2Array([Vector2(5, 12), Vector2(19, 12)]), o, s), col, w, true)
 			draw_polyline(_xf(PackedVector2Array([Vector2(13, 6), Vector2(19, 12), Vector2(13, 18)]), o, s), col, w, true)
