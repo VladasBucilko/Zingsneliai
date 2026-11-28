@@ -24,7 +24,7 @@ Soft colours, no flashing, sound can be muted, no time pressure, no "wrong" buzz
   drag between spaces to swap, off the board to remove; the speaker reads the plan in order. Saved on
   the device (`user://plan.json`). Pictures and words in `data/planner.json`.
 - **Žaidimukai** `scenes/games_menu.tscn` – the mini-games (`scenes/games/`, `scripts/games/`). Poros, Rūšiuok, Surask, Dėlionė and Kartok have 12 levels, Atspėk 9 (`data/levels/*.json`); the others generate their levels. The "Šaunu!" card has a → button to the next level. Each game remembers the level reached (`user://progress.json`). After the last level → opens **Begalinis** (unlimited): fresh random rounds made from the levels' own words and pictures (`scripts/games/endless_levels.gd`); a finished game then opens with the choice **Lygiai / Begalinis**. Burbulai's Begalinis (after level 10) never stops and gets harder every 6 pops:
-  - **Burbulai** `bubble_pop` – tap slowly rising bubbles; levels from `bubble_level_generator.gd` (deterministic; no fail)
+  - **Burbulai** `bubble_pop` – tap the rising bubbles; levels from `bubble_level_generator.gd` (deterministic; no fail). Bubbles rise faster: +20 % in level 1, evenly up to +50 % in level 6, then +5 % per level (max ×3); from level 5 some bubbles are clearly faster than others (±30 % → ±45 % by level 10)
   - **Poros** `matching` – tap a picture, then its twin in the other row
   - **Rūšiuok** `sorting` – drag (or tap, then tap a basket) each picture into baskets (Gyvūnai / Maistas / Transportas, Vaisiai / Daržovės; 2–3 baskets)
   - **Surask** `find` – hear "Surask šunį", tap the right picture (pictures only, no words; 2–4 pictures)
